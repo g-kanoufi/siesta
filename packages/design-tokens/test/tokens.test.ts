@@ -108,7 +108,7 @@ describe("typography tokens", () => {
 
 describe("spacing tokens", () => {
   it("keeps to the 4pt grid", () => {
-    for (const [name, v] of Object.entries(spacing)) {
+    for (const v of Object.values(spacing)) {
       expect(v % 2).toBe(0);
     }
   });

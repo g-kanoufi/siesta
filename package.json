@@ -2,7 +2,7 @@
   "name": "siesta",
   "private": true,
   "version": "0.0.0",
-  "description": "Siesta — a nap timer that waits for you to fall asleep.",
+  "description": "Siesta \u2014 a nap timer that waits for you to fall asleep.",
   "workspaces": [
     "packages/*",
     "apps/*"
@@ -10,13 +10,17 @@
   "scripts": {
     "test": "npm test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
+    "lint": "eslint packages apps --max-warnings 0",
     "test:vectors": "npm run generate -w @siesta/test-vectors"
   },
   "devDependencies": {
-    "typescript": "^5.9.2"
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.70.1"
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "type": "module"
 }
