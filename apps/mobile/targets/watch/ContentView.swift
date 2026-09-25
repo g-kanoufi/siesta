@@ -99,6 +99,13 @@ struct ContentView: View {
             Button("Start siesta") { viewModel.begin() }
                 .buttonStyle(.borderedProminent)
 
+            Button("Wake: \(viewModel.wakeIntensity.rawValue.capitalized)") {
+                viewModel.cycleWakeIntensity()
+            }
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .buttonStyle(.plain)
+
             #if DEBUG
             Button("probe") { viewModel.showProbe = true }
                 .font(.footnote)

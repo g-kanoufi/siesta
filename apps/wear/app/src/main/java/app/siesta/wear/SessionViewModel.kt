@@ -30,6 +30,9 @@ import siesta.WakeIntensity
  * Probe: owns session-level events — state transitions, the foreground
  * service that keeps the process alive while armed, and probe config.
  */
+private const val PREFS_NAME = "siesta"
+private const val INTENSITY_KEY = "siesta.wakeIntensity"
+
 class SessionViewModel(context: Context) : ViewModel() {
 
     private val appContext = context.applicationContext
@@ -39,6 +42,10 @@ class SessionViewModel(context: Context) : ViewModel() {
     private var lastLoggedState: NapState? = null
     private var monitorRunning = false
     private var sleep: HealthServicesSleepDetector? = null
+    private val prefs = appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    private val _wakeIntensity = MutableStateFlow(WakeIntensity.GENTLE)
+    val wakeIntensity: StateFlow<WakeIntensity> = _wakeIntensity.asStateFlow()
 
     private val _view = MutableStateFlow<NapViewState?>(null)
     val view: StateFlow<NapViewState?> = _view.asStateFlow()
@@ -55,27 +62,54 @@ class SessionViewModel(context: Context) : ViewModel() {
     init {
         ProbeLog.init(appContext)
         ProbeLog.log("boot", ProbeEnv.capture(appContext))
+        _wakeIntensity.value = loadWakeIntensity()
         viewModelScope.launch {
-            sleep = HealthServicesSleepDetector(appContext)
-            val m = NapSessionManager.resume(
-                clock = SystemClock,
-                sleep = sleep!!,
-                scheduler = AlarmSchedulerService(appContext),
-                haptics = WearHaptics(appContext),
-                store = PreferencesSessionStore(appContext),
-                wakeIntensity = WakeIntensity.NORMAL,
-            )
-            manager = m
-            ProbeLog.sessionId = m.snapshot?.id
-            unsubscribe = m.subscribe { refresh() }
+            manager = buildManager()
+            ProbeLog.sessionId = manager?.snapshot?.id
+            unsubscribe = manager?.subscribe { refresh() }
             refresh()
             _ready.value = true
             // 1 Hz countdown tick — re-reads timestamp-derived state only.
             while (isActive) {
                 delay(1000)
-                m.tick()
+                manager?.tick()
                 refresh()
             }
+        }
+    }
+
+    private suspend fun buildManager(): NapSessionManager {
+        val sleepService = sleep ?: HealthServicesSleepDetector(appContext).also { sleep = it }
+        return NapSessionManager.resume(
+            clock = SystemClock,
+            sleep = sleepService,
+            scheduler = AlarmSchedulerService(appContext),
+            haptics = WearHaptics(appContext),
+            store = PreferencesSessionStore(appContext),
+            wakeIntensity = _wakeIntensity.value,
+        )
+    }
+
+    private fun loadWakeIntensity(): WakeIntensity =
+        prefs.getString(INTENSITY_KEY, null)
+            ?.let { runCatching { WakeIntensity.valueOf(it) }.getOrNull() }
+            ?: WakeIntensity.GENTLE
+
+    /** Gentle → Normal → Strong. Persisted; applied immediately by rebuilding
+     *  the manager — only callable while no nap is in flight. */
+    fun cycleWakeIntensity() {
+        val all = WakeIntensity.entries
+        val next = all[(_wakeIntensity.value.ordinal + 1) % all.size]
+        _wakeIntensity.value = next
+        prefs.edit().putString(INTENSITY_KEY, next.name).apply()
+        ProbeLog.log("wake_intensity", mapOf("value" to next.name))
+        viewModelScope.launch {
+            unsubscribe?.invoke()
+            unsubscribe = null
+            manager = buildManager()
+            ProbeLog.sessionId = manager?.snapshot?.id
+            unsubscribe = manager?.subscribe { refresh() }
+            refresh()
         }
     }
 

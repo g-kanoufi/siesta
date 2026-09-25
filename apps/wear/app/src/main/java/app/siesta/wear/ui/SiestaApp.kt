@@ -89,6 +89,7 @@ fun SiestaApp(viewModel: SessionViewModel) {
 
 @Composable
 private fun SelectionScreen(viewModel: SessionViewModel, selected: Int) {
+    val intensity by viewModel.wakeIntensity.collectAsStateWithLifecycle()
     val presetIndex = napDurationPresets
         .indexOfFirst { it.minutes == selected }
         .coerceAtLeast(0)
@@ -134,6 +135,14 @@ private fun SelectionScreen(viewModel: SessionViewModel, selected: Int) {
         Button(onClick = { viewModel.begin() }) {
             Text("Start siesta")
         }
+        Text(
+            text = "Wake: ${intensity.name.lowercase().replaceFirstChar { it.titlecase() }}",
+            fontSize = 10.sp,
+            color = MaterialTheme.colors.onSurfaceVariant,
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .clickable { viewModel.cycleWakeIntensity() },
+        )
         if (BuildConfig.DEBUG) {
             Text(
                 text = "probe",

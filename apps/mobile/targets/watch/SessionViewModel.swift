@@ -9,6 +9,9 @@ final class SessionViewModel: ObservableObject {
     @Published private(set) var view: NapViewState?
     @Published var selectedMinutes: Int = 20
     @Published var showProbe = false
+    @Published var wakeIntensity: WakeIntensity = .gentle
+
+    private static let intensityKey = "siesta.wakeIntensity"
 
     private var manager: NapSessionManager?
     private var unsubscribe: (() -> Void)?
@@ -27,13 +30,16 @@ final class SessionViewModel: ObservableObject {
             ? ExtendedRuntimeSleepDetector()
             : HealthKitSleepDetector()
         sleepService = sleep
+        wakeIntensity = UserDefaults.standard
+            .string(forKey: Self.intensityKey)
+            .flatMap(WakeIntensity.init(rawValue:)) ?? .gentle
         let m = await NapSessionManager.resume(
             clock: SystemClock(),
             sleep: sleep,
             scheduler: scheduler,
             haptics: WatchHaptics(),
             store: UserDefaultsSessionStore(),
-            wakeIntensity: .normal
+            wakeIntensity: wakeIntensity
         )
         manager = m
         ProbeLog.shared.sessionId = m.snapshot?.id
@@ -75,6 +81,25 @@ final class SessionViewModel: ObservableObject {
     func simulateSleep() {
         (sleepService as? SimulatedSleepFiring)?
             .debugSimulateSleep(atMs: EpochMs(Date().timeIntervalSince1970 * 1000))
+    }
+
+    /// Gentle → Normal → Strong. Persisted; takes effect immediately by
+    /// rebuilding the manager — only callable while no nap is in flight.
+    func cycleWakeIntensity() {
+        let all = WakeIntensity.allCases
+        let i = (all.firstIndex(of: wakeIntensity) ?? 0) + 1
+        let next = all[i % all.count]
+        wakeIntensity = next
+        UserDefaults.standard.set(next.rawValue, forKey: Self.intensityKey)
+        ProbeLog.shared.log("wake_intensity", ["value": next.rawValue])
+        Task { await rebuild() }
+    }
+
+    private func rebuild() async {
+        unsubscribe?()
+        unsubscribe = nil
+        manager = nil
+        await start()
     }
 
     func selectDuration(_ minutes: Int) {
