@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -100,7 +102,13 @@ fun SiestaApp(viewModel: SessionViewModel) {
                     viewModel.cancel()
                 }
             NapState.SLEEPING ->
-                StatusScreen(NapState.SLEEPING, "Sleeping", remainingDetail(view?.remainingMs), "Cancel") {
+                StatusScreen(
+                    NapState.SLEEPING,
+                    "Sleeping",
+                    remainingDetail(view?.remainingMs),
+                    "Cancel",
+                    detailSemantics = remainingAccessibility(view?.remainingMs),
+                ) {
                     viewModel.cancel()
                 }
             NapState.WAKING ->
@@ -195,6 +203,7 @@ private fun StatusScreen(
     detail: String,
     actionLabel: String,
     debugAction: (() -> Unit)? = null,
+    detailSemantics: String? = null,
     onAction: () -> Unit,
 ) {
     // The wake moment arrives soft — content fades in over ~350 ms.
@@ -225,6 +234,9 @@ private fun StatusScreen(
                 fontSize = 11.sp,
                 color = MaterialTheme.colors.onSurfaceVariant,
                 textAlign = TextAlign.Center,
+                modifier = Modifier.semantics {
+                    contentDescription = detailSemantics ?: detail
+                },
             )
         }
         if (actionLabel == "Cancel") {
@@ -327,6 +339,15 @@ private fun remainingDetail(ms: Long?): String =
     if (ms == null) "" else {
         val total = (ms + 999) / 1000
         "%d:%02d remaining".format(total / 60, total % 60)
+    }
+
+/// TalkBack reads "17:42" as "seventeen colon forty-two" — announce words (§28).
+private fun remainingAccessibility(ms: Long?): String =
+    if (ms == null) "" else {
+        val total = (ms + 999) / 1000
+        val m = total / 60
+        val s = total % 60
+        if (s == 0L) "$m minutes remaining" else "$m minutes, $s seconds remaining"
     }
 
 private fun failSafeDetail(ms: Long?): String =

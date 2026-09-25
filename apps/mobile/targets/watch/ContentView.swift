@@ -35,6 +35,7 @@ struct ContentView: View {
             statusView(
                 title: "Sleeping",
                 detail: remainingDetail,
+                detailAccessibility: remainingAccessibility,
                 primaryLabel: "Cancel",
                 primaryAction: viewModel.cancel
             )
@@ -77,6 +78,7 @@ struct ContentView: View {
             + Text(" min")
                 .font(.title3)
                 .foregroundStyle(.secondary)
+                .accessibilityLabel("\(viewModel.selectedMinutes) minutes")
 
             Text(Self.presets.first { $0.minutes == viewModel.selectedMinutes }?.description
                  ?? "Your nap")
@@ -122,6 +124,7 @@ struct ContentView: View {
     private func statusView(
         title: String,
         detail: String,
+        detailAccessibility: String? = nil,
         primaryLabel: String,
         primaryAction: @escaping () -> Void,
         debugAction: (() -> Void)? = nil
@@ -135,6 +138,7 @@ struct ContentView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+                    .accessibilityLabel(detailAccessibility ?? detail)
             }
             if primaryLabel == "Cancel" {
                 Button(primaryLabel, action: primaryAction)
@@ -189,6 +193,17 @@ struct ContentView: View {
         guard let ms = viewModel.view?.remainingMs else { return "" }
         let total = Int(ceil(Double(ms) / 1000))
         return String(format: "%d:%02d remaining", total / 60, total % 60)
+    }
+
+    /// "17:42 remaining" reads as "seventeen colon forty-two" in VoiceOver —
+    /// announce it in words instead (§28).
+    private var remainingAccessibility: String {
+        guard let ms = viewModel.view?.remainingMs else { return "" }
+        let total = Int(ceil(Double(ms) / 1000))
+        let m = total / 60
+        let s = total % 60
+        if s == 0 { return "\(m) minutes remaining" }
+        return "\(m) minutes, \(s) seconds remaining"
     }
 
     private var failSafeDetail: String {

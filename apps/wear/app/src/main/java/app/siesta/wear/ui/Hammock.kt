@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import siesta.NapState
 
@@ -101,7 +102,7 @@ fun Hammock(
         }
     }
 
-    Canvas(modifier = modifier) {
+    Canvas(modifier = modifier.clearAndSetSemantics {}) {
         val w = size.width
         val h = size.height
         translate(top = -lift.value) {
