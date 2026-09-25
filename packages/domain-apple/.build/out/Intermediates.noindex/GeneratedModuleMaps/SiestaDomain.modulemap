@@ -1,4 +1,0 @@
-module SiestaDomain {
-header "SiestaDomain-Swift.h"
-export *
-}

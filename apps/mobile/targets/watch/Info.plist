@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>WKApplication</key>
+	<true/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Siesta reads your heart rate to notice when you fall asleep, so your nap timer starts when you actually drift off.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Siesta does not write any health data.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>workout-processing</string>
+	</array>
+</dict>
+</plist>

@@ -53,7 +53,10 @@ public func nextDeadlineMs(_ s: NapSessionSnapshot) -> EpochMs? {
 }
 
 /// Countdown for the sleeping state. Clamped at 0; nil when no deadline.
-public func remainingMs(_ s: NapSessionSnapshot, nowMs: EpochMs) -> Int64? {
+/// Named distinctly from NapSessionManager.remainingMs() so the call inside
+/// the class resolves without a module qualifier — needed when these sources
+/// are compiled directly into an app target (e.g. the watch app).
+public func snapshotRemainingMs(_ s: NapSessionSnapshot, nowMs: EpochMs) -> Int64? {
     guard let deadline = nextDeadlineMs(s) else { return nil }
     return max(0, deadline - nowMs)
 }

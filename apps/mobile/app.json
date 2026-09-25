@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Siesta",
+    "slug": "siesta",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "siesta",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "app.siesta",
+      "supportsTablet": false,
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.app.siesta"]
+      }
+    },
+    "android": {
+      "package": "app.siesta",
+      "adaptiveIcon": {
+        "backgroundColor": "#161310",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "./plugins/with-domain-sync.js",
+      "@bacons/apple-targets"
+    ]
+  }
+}

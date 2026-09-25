@@ -157,7 +157,7 @@ public final class NapSessionManager {
 
     public func remainingMs() -> Int64? {
         guard let s = snapshot else { return nil }
-        return SiestaDomain.remainingMs(s, nowMs: clock.nowMs())
+        return snapshotRemainingMs(s, nowMs: clock.nowMs())
     }
 
     public func view() -> NapViewState {

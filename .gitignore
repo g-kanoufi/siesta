@@ -36,3 +36,7 @@ coverage/
 
 # OS
 .DS_Store
+apps/mobile/targets/watch/Domain/
+
+# SwiftPM
+**/.build/
