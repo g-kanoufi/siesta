@@ -1,0 +1,79 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SiestaDomain-primary.dia",
+    "emit-module-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SiestaDomain-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SiestaDomain-primary-emit-module.dia",
+    "pch" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SiestaDomain-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SiestaDomain-primary.swiftdeps"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Durations.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Durations~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Haptics.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Haptics~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Machine.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Machine~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Services.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Services~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Session.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Session~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/SleepOnset.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/SleepOnset~partial.swiftmodule"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomain/Wake.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomain-t.build/Objects-normal/arm64/Wake~partial.swiftmodule"
+  }
+}

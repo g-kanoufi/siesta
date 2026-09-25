@@ -195,6 +195,7 @@ export async function generateAll() {
   const scenarios = [
     {
       name: "power-nap-happy-path",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 20 },
         { op: "start" },
@@ -218,6 +219,7 @@ export async function generateAll() {
     },
     {
       name: "fail-safe-wake-without-detection",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 20 },
         { op: "start" },
@@ -233,6 +235,7 @@ export async function generateAll() {
     },
     {
       name: "midnight-crossing",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 20 },
         { op: "start" },
@@ -250,6 +253,7 @@ export async function generateAll() {
     },
     {
       name: "manual-start",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 30 },
         { op: "startManually" },
@@ -265,6 +269,7 @@ export async function generateAll() {
     },
     {
       name: "cancel-while-waiting",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 15 },
         { op: "start" },
@@ -280,6 +285,7 @@ export async function generateAll() {
     },
     {
       name: "resume-overdue-nap",
+      startMs: T0,
       ops: [
         { op: "select", minutes: 20 },
         { op: "start" },

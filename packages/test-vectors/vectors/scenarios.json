@@ -15,6 +15,7 @@
   "cases": [
     {
       "name": "power-nap-happy-path",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",
@@ -99,6 +100,7 @@
     },
     {
       "name": "fail-safe-wake-without-detection",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",
@@ -171,6 +173,7 @@
     },
     {
       "name": "midnight-crossing",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",
@@ -252,6 +255,7 @@
     },
     {
       "name": "manual-start",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",
@@ -324,6 +328,7 @@
     },
     {
       "name": "cancel-while-waiting",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",
@@ -363,6 +368,7 @@
     },
     {
       "name": "resume-overdue-nap",
+      "startMs": 1790337600000,
       "ops": [
         {
           "op": "select",

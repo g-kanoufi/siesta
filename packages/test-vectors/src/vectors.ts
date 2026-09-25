@@ -47,7 +47,7 @@ export interface Vectors {
   scenarios: {
     version: 1;
     opsSpec: Record<string, string>;
-    cases: Array<{ name: string; ops: ScenarioOp[]; expected: unknown }>;
+    cases: Array<{ name: string; startMs: number; ops: ScenarioOp[]; expected: unknown }>;
   };
   constants: { version: 1; values: unknown };
 }

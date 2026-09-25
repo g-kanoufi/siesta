@@ -1,0 +1,19 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/SiestaDomainMocks-primary.dia",
+    "emit-module-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/SiestaDomainMocks-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/SiestaDomainMocks-primary-emit-module.dia",
+    "pch" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/SiestaDomainMocks-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/SiestaDomainMocks-primary.swiftdeps"
+  },
+  "/Users/mba/Projects/siesta/packages/domain-apple/Sources/SiestaDomainMocks/Mocks.swift" : {
+    "const-values" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.swiftconstvalues",
+    "dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.d",
+    "diagnostics" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.dia",
+    "index-unit-output-path" : "/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.o",
+    "llvm-bc" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.bc",
+    "object" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.o",
+    "swift-dependencies" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks.swiftdeps",
+    "swiftmodule" : "/Users/mba/Projects/siesta/packages/domain-apple/.build/out/Intermediates.noindex/SiestaDomain.build/Debug/SiestaDomainMocks-t.build/Objects-normal/arm64/Mocks~partial.swiftmodule"
+  }
+}

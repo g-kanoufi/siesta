@@ -1,0 +1,4 @@
+module SiestaDomainMocks {
+header "SiestaDomainMocks-Swift.h"
+export *
+}
