@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   js:
-    name: TypeScript — lint, typecheck, tests, vector drift
+    name: TypeScript — lint, typecheck, tests, vectors, web build, audit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +23,10 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: npm run test:vectors
+      - run: git diff --exit-code -- packages/test-vectors/vectors
+      - run: npm run build -w @siesta/web
+      - run: npm audit --audit-level=critical
 
   kotlin:
     name: Kotlin port — replay vectors
@@ -44,3 +48,30 @@ jobs:
       - uses: actions/checkout@v4
       - working-directory: packages/domain-apple
         run: swift test
+
+  watch:
+    name: watchOS app — prebuild + compile
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Prebuild iOS + watch targets
+        working-directory: apps/mobile
+        run: npx expo prebuild -p ios --clean
+      - name: Pod install
+        working-directory: apps/mobile/ios
+        run: pod install
+      - name: Build watchOS scheme (simulator)
+        working-directory: apps/mobile/ios
+        run: >-
+          xcodebuild -workspace Siesta.xcworkspace
+          -scheme SiestaWatch
+          -destination 'generic/platform=watchOS Simulator'
+          -configuration Debug
+          CODE_SIGNING_ALLOWED=NO
+          build

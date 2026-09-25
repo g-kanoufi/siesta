@@ -2,7 +2,7 @@
   "name": "siesta",
   "private": true,
   "version": "0.0.0",
-  "description": "Siesta \u2014 a nap timer that waits for you to fall asleep.",
+  "description": "Siesta — a nap timer that waits for you to fall asleep.",
   "workspaces": [
     "packages/*",
     "apps/*"
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "eslint": "^9.39.5",
+    "sharp": "^0.35.4",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.70.1"
   },
