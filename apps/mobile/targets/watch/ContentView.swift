@@ -15,6 +15,11 @@ struct ContentView: View {
 
     @ViewBuilder
     private var content: some View {
+        if !viewModel.didOnboard {
+            OnboardingView { viewModel.completeOnboarding() }
+        } else if viewModel.showSleepAccessPrompt {
+            SleepAccessView { viewModel.confirmSleepAccess() }
+        } else {
         switch viewModel.view?.state ?? .idle {
         case .idle, .selectingDuration:
             selectionView
@@ -64,6 +69,7 @@ struct ContentView: View {
                 Button("Try again") { viewModel.cancel() }
                     .foregroundStyle(.secondary)
             }
+        }
         }
     }
 

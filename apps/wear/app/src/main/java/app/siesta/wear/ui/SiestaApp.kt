@@ -1,5 +1,8 @@
 package app.siesta.wear.ui
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,11 +54,32 @@ fun SiestaApp(viewModel: SessionViewModel) {
     val selected by viewModel.selectedMinutes.collectAsStateWithLifecycle()
     val ready by viewModel.ready.collectAsStateWithLifecycle()
     val showProbe by viewModel.showProbe.collectAsStateWithLifecycle()
+    val didOnboard by viewModel.didOnboard.collectAsStateWithLifecycle()
+    val showSleepAccess by viewModel.showSleepAccessPrompt.collectAsStateWithLifecycle()
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { viewModel.confirmSleepAccess() }
 
     MaterialTheme(colors = SiestaColors) {
         if (!ready) return@MaterialTheme
         if (BuildConfig.DEBUG && showProbe) {
             ProbeScreen { viewModel.setShowProbe(false) }
+            return@MaterialTheme
+        }
+        if (!didOnboard) {
+            OnboardingScreen { viewModel.completeOnboarding() }
+            return@MaterialTheme
+        }
+        if (showSleepAccess) {
+            SleepAccessScreen {
+                permissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.BODY_SENSORS,
+                        Manifest.permission.POST_NOTIFICATIONS,
+                    ),
+                )
+            }
             return@MaterialTheme
         }
         when (view?.state ?: NapState.IDLE) {
@@ -207,6 +234,65 @@ private fun StatusScreen(
                     .clickable { debugAction() },
             )
         }
+    }
+}
+
+/// First-run intro per the brief: three short screens, no carousel chrome.
+@Composable
+private fun OnboardingScreen(onDone: () -> Unit) {
+    val pages = listOf(
+        "Meet Siesta." to "A tiny nap timer that waits for you to fall asleep.",
+        "Pick your nap." to "Choose how long you'd like to sleep.",
+        "We'll wake you gently." to "Siesta uses your watch's haptics when your nap is over.",
+    )
+    var page by remember { mutableIntStateOf(0) }
+    val (title, body) = pages[page]
+    Column(
+        modifier = Modifier.fillMaxSize().padding(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Hammock(
+            state = NapState.IDLE,
+            accent = MaterialTheme.colors.primary,
+            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            modifier = Modifier.size(width = 64.dp, height = 28.dp),
+        )
+        Text(text = title, fontSize = 15.sp, color = MaterialTheme.colors.onBackground)
+        Text(
+            text = body,
+            fontSize = 11.sp,
+            color = MaterialTheme.colors.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+        Button(onClick = { if (page == pages.lastIndex) onDone() else page++ }) {
+            Text(if (page == pages.lastIndex) "Continue" else "Next")
+        }
+    }
+}
+
+/// One-time contextual explainer before the first runtime permission request
+/// (brief §47: ask at the moment of use, never without context).
+@Composable
+private fun SleepAccessScreen(onAllow: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Hammock(
+            state = NapState.IDLE,
+            accent = MaterialTheme.colors.primary,
+            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            modifier = Modifier.size(width = 64.dp, height = 28.dp),
+        )
+        Text(
+            text = "To know when you've fallen asleep, Siesta reads your heart rate.",
+            fontSize = 12.sp,
+            color = MaterialTheme.colors.onBackground,
+            textAlign = TextAlign.Center,
+        )
+        Button(onClick = onAllow) { Text("Allow sleep access") }
     }
 }
 

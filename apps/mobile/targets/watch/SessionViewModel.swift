@@ -10,8 +10,12 @@ final class SessionViewModel: ObservableObject {
     @Published var selectedMinutes: Int = 20
     @Published var showProbe = false
     @Published var wakeIntensity: WakeIntensity = .gentle
+    @Published var didOnboard = false
+    @Published var showSleepAccessPrompt = false
 
     private static let intensityKey = "siesta.wakeIntensity"
+    private static let onboardKey = "siesta.didOnboard"
+    private static let sleepAccessKey = "siesta.didExplainSleepAccess"
 
     private var manager: NapSessionManager?
     private var unsubscribe: (() -> Void)?
@@ -33,6 +37,7 @@ final class SessionViewModel: ObservableObject {
         wakeIntensity = UserDefaults.standard
             .string(forKey: Self.intensityKey)
             .flatMap(WakeIntensity.init(rawValue:)) ?? .gentle
+        didOnboard = UserDefaults.standard.bool(forKey: Self.onboardKey)
         let m = await NapSessionManager.resume(
             clock: SystemClock(),
             sleep: sleep,
@@ -108,7 +113,27 @@ final class SessionViewModel: ObservableObject {
         try? manager?.selectDuration(minutes)
     }
 
+    func completeOnboarding() {
+        didOnboard = true
+        UserDefaults.standard.set(true, forKey: Self.onboardKey)
+    }
+
     func begin() {
+        // First arm: explain why before the HealthKit sheet appears (§47).
+        if !UserDefaults.standard.bool(forKey: Self.sleepAccessKey) {
+            showSleepAccessPrompt = true
+            return
+        }
+        arm()
+    }
+
+    func confirmSleepAccess() {
+        UserDefaults.standard.set(true, forKey: Self.sleepAccessKey)
+        showSleepAccessPrompt = false
+        arm()
+    }
+
+    private func arm() {
         ProbeLog.shared.log("arm_begin", ["minutes": selectedMinutes])
         try? manager?.selectDuration(selectedMinutes)
         Task { try? await manager?.start() }

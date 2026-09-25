@@ -32,6 +32,8 @@ import siesta.WakeIntensity
  */
 private const val PREFS_NAME = "siesta"
 private const val INTENSITY_KEY = "siesta.wakeIntensity"
+private const val ONBOARD_KEY = "siesta.didOnboard"
+private const val SLEEP_ACCESS_KEY = "siesta.didExplainSleepAccess"
 
 class SessionViewModel(context: Context) : ViewModel() {
 
@@ -59,10 +61,17 @@ class SessionViewModel(context: Context) : ViewModel() {
     private val _showProbe = MutableStateFlow(false)
     val showProbe: StateFlow<Boolean> = _showProbe.asStateFlow()
 
+    private val _didOnboard = MutableStateFlow(false)
+    val didOnboard: StateFlow<Boolean> = _didOnboard.asStateFlow()
+
+    private val _showSleepAccessPrompt = MutableStateFlow(false)
+    val showSleepAccessPrompt: StateFlow<Boolean> = _showSleepAccessPrompt.asStateFlow()
+
     init {
         ProbeLog.init(appContext)
         ProbeLog.log("boot", ProbeEnv.capture(appContext))
         _wakeIntensity.value = loadWakeIntensity()
+        _didOnboard.value = prefs.getBoolean(ONBOARD_KEY, false)
         viewModelScope.launch {
             manager = buildManager()
             ProbeLog.sessionId = manager?.snapshot?.id
@@ -155,7 +164,27 @@ class SessionViewModel(context: Context) : ViewModel() {
         refresh()
     }
 
+    fun completeOnboarding() {
+        _didOnboard.value = true
+        prefs.edit().putBoolean(ONBOARD_KEY, true).apply()
+    }
+
     fun begin() {
+        // First arm: explain why before the runtime permission sheet (§47).
+        if (!prefs.getBoolean(SLEEP_ACCESS_KEY, false)) {
+            _showSleepAccessPrompt.value = true
+            return
+        }
+        arm()
+    }
+
+    fun confirmSleepAccess() {
+        prefs.edit().putBoolean(SLEEP_ACCESS_KEY, true).apply()
+        _showSleepAccessPrompt.value = false
+        arm()
+    }
+
+    private fun arm() {
         ProbeLog.log("arm_begin", mapOf("minutes" to _selectedMinutes.value))
         manager?.selectDuration(_selectedMinutes.value)
         viewModelScope.launch { manager?.start() }
