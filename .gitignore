@@ -40,3 +40,6 @@ apps/mobile/targets/watch/Domain/
 
 # SwiftPM
 **/.build/
+
+# Astro
+.astro/

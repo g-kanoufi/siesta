@@ -11,8 +11,8 @@ siesta is over.
 ```
 apps/
   mobile/        Expo React Native — iOS companion host (+ optional Android)
-    targets/watch/   watchOS SwiftUI app (via @bacons/expo-apple-targets)
-  wearos/        Kotlin + Compose for Wear OS (standalone Gradle project)
+    targets/watch/   watchOS SwiftUI app (via @bacons/apple-targets)
+  wearos/        Kotlin + Compose for Wear OS (planned — domain port is ready)
   web/           siesta.app — Astro marketing site
 packages/
   core/          Canonical domain — TypeScript, fully tested (@siesta/core)

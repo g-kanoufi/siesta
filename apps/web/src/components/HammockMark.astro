@@ -1,0 +1,50 @@
+---
+interface Props {
+  size?: number;
+  animated?: boolean;
+}
+const { size = 40, animated = false } = Astro.props;
+---
+
+<svg
+  class:list={["hammock", { sway: animated }]}
+  width={size}
+  height={size * 0.56}
+  viewBox="0 0 64 36"
+  fill="none"
+  aria-hidden="true"
+>
+  <rect x="4" y="2" width="3" height="18" rx="1.5" fill="var(--text-tertiary)" />
+  <rect x="57" y="2" width="3" height="18" rx="1.5" fill="var(--text-tertiary)" />
+  <path
+    d="M5 6 Q32 44 59 6"
+    fill="none"
+    stroke="var(--accent)"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+</svg>
+
+<style>
+  .hammock {
+    display: block;
+  }
+  .hammock.sway {
+    animation: sway var(--sway-period) ease-in-out infinite;
+    transform-origin: 50% 0%;
+  }
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(calc(var(--sway-deg) * -1));
+    }
+    50% {
+      transform: rotate(var(--sway-deg));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hammock.sway {
+      animation: none;
+    }
+  }
+</style>

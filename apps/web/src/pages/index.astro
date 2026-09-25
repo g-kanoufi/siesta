@@ -1,0 +1,366 @@
+---
+import "@fontsource-variable/fraunces";
+import "@fontsource/instrument-sans";
+import "../styles/global.css";
+import { ambient, dark } from "@siesta/design-tokens";
+import HammockMark from "../components/HammockMark.astro";
+import WatchMock from "../components/WatchMock.astro";
+
+const cssVars = {
+  "--bg": dark.background,
+  "--surface": dark.surface,
+  "--surface-elevated": dark.surfaceElevated,
+  "--text-primary": dark.textPrimary,
+  "--text-secondary": dark.textSecondary,
+  "--text-tertiary": dark.textTertiary,
+  "--accent": dark.accent,
+  "--on-accent": dark.onAccent,
+  "--accent-soft": dark.accentSoft,
+  "--font-display": '"Fraunces Variable", Georgia, serif',
+  "--font-body": '"Instrument Sans", system-ui, sans-serif',
+  "--sway-period": `${ambient.sway.periodMs}ms`,
+  "--sway-deg": `${ambient.sway.amplitudeDegrees}deg`,
+};
+
+const steps = [
+  {
+    n: "01",
+    title: "Choose a duration",
+    body: "Five minutes to two hours. Twenty is the classic siesta.",
+  },
+  {
+    n: "02",
+    title: "Put the watch down",
+    body: "No countdown yet. Siesta waits quietly while you settle.",
+  },
+  {
+    n: "03",
+    title: "Drift",
+    body: "A workout-grade heart-rate stream notices the settled rhythm of sleep onset. The timer starts now — not before.",
+  },
+  {
+    n: "04",
+    title: "Wake",
+    body: "Gentle haptics on your wrist, exactly when you asked. Not a second of nap wasted on setup.",
+  },
+];
+---
+
+<html lang="en" style={cssVars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Siesta — a nap timer that waits for sleep</title>
+    <meta
+      name="description"
+      content="Pick a duration, put your watch down, drift off. Siesta notices when you fall asleep and wakes you gently when it's over. €2.99, once. No subscription, no ads."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content="Siesta — a nap timer that waits for sleep" />
+    <meta
+      property="og:description"
+      content="Choose how long you want to nap. Siesta notices when you actually fall asleep — and wakes you gently, right on time."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://siesta.app" />
+    <meta name="theme-color" content={dark.background} />
+  </head>
+  <body>
+    <header class="nav rise">
+      <a class="wordmark" href="/" aria-label="Siesta home">
+        <HammockMark size={30} />
+        <span>siesta</span>
+      </a>
+      <span class="nav-price">€2.99 · once</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow rise" style="animation-delay:.05s">A nap timer for your wrist</p>
+          <h1 class="rise" style="animation-delay:.12s">
+            Sleep first.<br />Count down second.
+          </h1>
+          <p class="lede rise" style="animation-delay:.2s">
+            Pick a duration, put the watch down, drift off. Siesta notices when
+            you actually fall asleep — only then does the timer start. You wake
+            gently, exactly on time.
+          </p>
+          <div class="cta rise" style="animation-delay:.28s">
+            <a class="pill" href="#price">€2.99 · one purchase</a>
+            <span class="platforms">Apple Watch · Wear OS</span>
+          </div>
+        </div>
+        <div class="hero-watch rise" style="animation-delay:.18s">
+          <WatchMock />
+        </div>
+      </section>
+
+      <section class="steps" aria-labelledby="how">
+        <h2 id="how" class="section-label">How it works</h2>
+        <ol>
+          {
+            steps.map((s) => (
+              <li>
+                <span class="step-n">{s.n}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="honest">
+        <h2 class="display-small">Detection, not decoration.</h2>
+        <p>
+          Most nap timers guess the moment you lie down and start counting.
+          Siesta doesn't. A workout session streams your heart rate, and the
+          app waits for the settled pattern of real sleep onset before the
+          clock begins.
+        </p>
+        <p>
+          Your health data never leaves your wrist. There are no servers, no
+          account, nothing to sync — the whole app lives on the watch. And if
+          your wrist can't be read tonight, a fail-safe timer still wakes you.
+        </p>
+        <p class="fine">
+          Siesta is a better nap, not a medical device. Detection is a
+          heuristic — good enough for a nap, honest about everything else.
+        </p>
+      </section>
+
+      <section class="price" id="price">
+        <h2 class="price-figure"><span class="cur">€</span>2.99</h2>
+        <p class="price-word">once</p>
+        <p>
+          One purchase on the watch you already own. No subscription, no ads,
+          no metrics, no upsell — a nap timer shouldn't need a business model
+          beyond being bought.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <HammockMark size={26} />
+      <p>siesta.app</p>
+      <p class="fine">Designed to be forgotten the moment you lie down.</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .nav {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem clamp(1.25rem, 5vw, 4rem);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+  .nav-price {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(4rem, 9vw, 8rem);
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.4rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "opsz" 144;
+    font-weight: 480;
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+  }
+  .lede {
+    max-width: 30rem;
+    margin-top: 1.6rem;
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+  }
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    margin-top: 2.4rem;
+  }
+  .pill {
+    display: inline-block;
+    padding: 0.85rem 1.7rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pill:hover {
+    color: var(--on-accent);
+    transform: translateY(-2px);
+  }
+  .platforms {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+  }
+
+  .steps {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+  }
+  .section-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 2.8rem;
+  }
+  .steps ol {
+    list-style: none;
+    display: grid;
+    gap: 2.6rem;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.4rem;
+    align-items: baseline;
+  }
+  .step-n {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100;
+    font-size: 1.4rem;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .steps h3 {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 60;
+    font-weight: 520;
+    font-size: 1.45rem;
+    margin-bottom: 0.35rem;
+  }
+  .steps p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .honest {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+  }
+  .display-small {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "opsz" 72;
+    font-weight: 480;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.8rem;
+  }
+  .honest p {
+    color: var(--text-secondary);
+    margin-bottom: 1.1rem;
+  }
+  .honest .fine {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    margin-top: 1.8rem;
+  }
+
+  .price {
+    text-align: center;
+    padding: clamp(3rem, 9vw, 8rem) 1.25rem;
+  }
+  .price-figure {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "opsz" 144;
+    font-weight: 460;
+    font-size: clamp(4.5rem, 14vw, 9rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .cur {
+    color: var(--accent);
+    font-size: 0.55em;
+    vertical-align: 0.14em;
+  }
+  .price-word {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100;
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+    margin: 0.6rem 0 2rem;
+  }
+  .price p:last-child {
+    max-width: 34rem;
+    margin-inline: auto;
+    color: var(--text-secondary);
+  }
+
+  .footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 4rem 1.25rem 3rem;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+  }
+  .footer .fine {
+    color: color-mix(in srgb, var(--text-tertiary) 70%, transparent);
+  }
+
+  @media (max-width: 52rem) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding-top: 2rem;
+    }
+    .hero-watch {
+      order: -1;
+    }
+    .watch {
+      width: min(220px, 60vw);
+    }
+    h1 {
+      font-size: clamp(2.4rem, 9vw, 3.4rem);
+    }
+  }
+</style>

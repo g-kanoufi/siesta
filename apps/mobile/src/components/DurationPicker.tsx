@@ -7,7 +7,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { NAP_DURATION_PRESETS } from "@siesta/core";
 import {
-  colors,
   motion,
   spacing,
   typography,

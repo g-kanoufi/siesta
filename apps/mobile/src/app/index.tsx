@@ -1,11 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  NAP_DURATION_PRESETS,
-  presetFor,
-  type NapState,
-} from "@siesta/core";
+import { presetFor, type NapState } from "@siesta/core";
 import { colors, spacing, typography } from "@siesta/design-tokens";
 import { DurationPicker } from "../components/DurationPicker";
 import { Hammock } from "../components/Hammock";
