@@ -41,6 +41,19 @@ jobs:
       - working-directory: packages/domain-wear
         run: gradle test --console=plain
 
+  wear:
+    name: Wear OS app — compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - working-directory: apps/wear
+        run: ./gradlew :app:assembleDebug --console=plain
+
   swift:
     name: Swift port — replay vectors
     runs-on: macos-latest
