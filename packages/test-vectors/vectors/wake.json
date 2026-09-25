@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "sleepDetectedAtMs": 1790337600000,
+      "durationMinutes": 20,
+      "expectedWakeAtMs": 1790338800000
+    },
+    {
+      "sleepDetectedAtMs": 1790380500000,
+      "durationMinutes": 20,
+      "expectedWakeAtMs": 1790381700000
+    },
+    {
+      "sleepDetectedAtMs": 1790337600000,
+      "durationMinutes": 90,
+      "expectedWakeAtMs": 1790343000000
+    },
+    {
+      "sleepDetectedAtMs": 1790337600000,
+      "durationMinutes": 5,
+      "expectedWakeAtMs": 1790337900000
+    },
+    {
+      "sleepDetectedAtMs": 1792889100000,
+      "durationMinutes": 20,
+      "expectedWakeAtMs": 1792890300000
+    }
+  ]
+}

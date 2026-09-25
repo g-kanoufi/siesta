@@ -1,0 +1,599 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "from": "idle",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "start"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "idle",
+      "event": {
+        "type": "reset"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "start"
+      },
+      "to": "armed"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "selecting_duration",
+      "event": {
+        "type": "reset"
+      },
+      "to": "selecting_duration"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "armed"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "start"
+      },
+      "to": "armed"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "armed"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "armed"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "error"
+    },
+    {
+      "from": "armed",
+      "event": {
+        "type": "reset"
+      },
+      "to": "armed"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "start"
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "error"
+    },
+    {
+      "from": "waiting_for_sleep",
+      "event": {
+        "type": "reset"
+      },
+      "to": "waiting_for_sleep"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "start"
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "error"
+    },
+    {
+      "from": "sleeping",
+      "event": {
+        "type": "reset"
+      },
+      "to": "sleeping"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "start"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "waking",
+      "event": {
+        "type": "reset"
+      },
+      "to": "waking"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "start"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "completed"
+    },
+    {
+      "from": "completed",
+      "event": {
+        "type": "reset"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "start"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "cancelled"
+    },
+    {
+      "from": "cancelled",
+      "event": {
+        "type": "reset"
+      },
+      "to": "idle"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "duration_selected",
+        "minutes": 20
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "start"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "detector_ready"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "sleep_detected",
+        "atMs": 1790337600000
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "wake_due"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "wake_acknowledged"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "cancel"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "error",
+        "reason": "sensor_unavailable"
+      },
+      "to": "error"
+    },
+    {
+      "from": "error",
+      "event": {
+        "type": "reset"
+      },
+      "to": "idle"
+    }
+  ]
+}

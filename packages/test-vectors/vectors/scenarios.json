@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "opsSpec": {
+    "select": "choose duration (minutes)",
+    "start": "arm detection + fail-safe (clock at scenario T0)",
+    "startManually": "manual countdown start (no detector)",
+    "advance": "move the test clock to toMs",
+    "sleepDetected": "fire the sleep callback at atMs",
+    "tick": "evaluate deadlines",
+    "acknowledge": "user acknowledged the wake",
+    "cancel": "user cancelled",
+    "dismiss": "reset to idle",
+    "resume": "kill and resume the manager at atMs"
+  },
+  "cases": [
+    {
+      "name": "power-nap-happy-path",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 20
+        },
+        {
+          "op": "start"
+        },
+        {
+          "op": "advance",
+          "toMs": 1790337900000
+        },
+        {
+          "op": "sleepDetected",
+          "atMs": 1790337900000
+        },
+        {
+          "op": "advance",
+          "toMs": 1790339100000
+        },
+        {
+          "op": "tick"
+        },
+        {
+          "op": "acknowledge"
+        },
+        {
+          "op": "dismiss"
+        }
+      ],
+      "expected": {
+        "state": "idle",
+        "session": null,
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339700000,
+            "kind": "fail_safe",
+            "sessionId": "nap-1"
+          },
+          {
+            "atMs": 1790339100000,
+            "kind": "nap_wake",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": [
+          {
+            "steps": [
+              {
+                "kind": "pulse",
+                "intensity": 0.35,
+                "durationMs": 120
+              },
+              {
+                "kind": "pause",
+                "durationMs": 900
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.45,
+                "durationMs": 140
+              },
+              {
+                "kind": "pause",
+                "durationMs": 700
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.55,
+                "durationMs": 160
+              },
+              {
+                "kind": "pause",
+                "durationMs": 1400
+              }
+            ],
+            "repeatIntervalMs": 4000
+          }
+        ]
+      }
+    },
+    {
+      "name": "fail-safe-wake-without-detection",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 20
+        },
+        {
+          "op": "start"
+        },
+        {
+          "op": "advance",
+          "toMs": 1790339700000
+        },
+        {
+          "op": "tick"
+        }
+      ],
+      "expected": {
+        "state": "waking",
+        "session": {
+          "state": "waking",
+          "selectedDurationMinutes": 20,
+          "armedAtMs": 1790337600000,
+          "sleepDetectedAtMs": null,
+          "expectedWakeAtMs": null,
+          "failSafeWakeAtMs": 1790339700000
+        },
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339700000,
+            "kind": "fail_safe",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": [
+          {
+            "steps": [
+              {
+                "kind": "pulse",
+                "intensity": 0.35,
+                "durationMs": 120
+              },
+              {
+                "kind": "pause",
+                "durationMs": 900
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.45,
+                "durationMs": 140
+              },
+              {
+                "kind": "pause",
+                "durationMs": 700
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.55,
+                "durationMs": 160
+              },
+              {
+                "kind": "pause",
+                "durationMs": 1400
+              }
+            ],
+            "repeatIntervalMs": 4000
+          }
+        ]
+      }
+    },
+    {
+      "name": "midnight-crossing",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 20
+        },
+        {
+          "op": "start"
+        },
+        {
+          "op": "sleepDetected",
+          "atMs": 1790380500000
+        },
+        {
+          "op": "advance",
+          "toMs": 1790381700000
+        },
+        {
+          "op": "tick"
+        }
+      ],
+      "expected": {
+        "state": "waking",
+        "session": {
+          "state": "waking",
+          "selectedDurationMinutes": 20,
+          "armedAtMs": 1790337600000,
+          "sleepDetectedAtMs": 1790380500000,
+          "expectedWakeAtMs": 1790381700000,
+          "failSafeWakeAtMs": 1790339700000
+        },
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339700000,
+            "kind": "fail_safe",
+            "sessionId": "nap-1"
+          },
+          {
+            "atMs": 1790381700000,
+            "kind": "nap_wake",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": [
+          {
+            "steps": [
+              {
+                "kind": "pulse",
+                "intensity": 0.35,
+                "durationMs": 120
+              },
+              {
+                "kind": "pause",
+                "durationMs": 900
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.45,
+                "durationMs": 140
+              },
+              {
+                "kind": "pause",
+                "durationMs": 700
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.55,
+                "durationMs": 160
+              },
+              {
+                "kind": "pause",
+                "durationMs": 1400
+              }
+            ],
+            "repeatIntervalMs": 4000
+          }
+        ]
+      }
+    },
+    {
+      "name": "manual-start",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 30
+        },
+        {
+          "op": "startManually"
+        },
+        {
+          "op": "advance",
+          "toMs": 1790339400000
+        },
+        {
+          "op": "tick"
+        }
+      ],
+      "expected": {
+        "state": "waking",
+        "session": {
+          "state": "waking",
+          "selectedDurationMinutes": 30,
+          "armedAtMs": 1790337600000,
+          "sleepDetectedAtMs": 1790337600000,
+          "expectedWakeAtMs": 1790339400000,
+          "failSafeWakeAtMs": 1790339400000
+        },
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339400000,
+            "kind": "nap_wake",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": [
+          {
+            "steps": [
+              {
+                "kind": "pulse",
+                "intensity": 0.35,
+                "durationMs": 120
+              },
+              {
+                "kind": "pause",
+                "durationMs": 900
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.45,
+                "durationMs": 140
+              },
+              {
+                "kind": "pause",
+                "durationMs": 700
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.55,
+                "durationMs": 160
+              },
+              {
+                "kind": "pause",
+                "durationMs": 1400
+              }
+            ],
+            "repeatIntervalMs": 4000
+          }
+        ]
+      }
+    },
+    {
+      "name": "cancel-while-waiting",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 15
+        },
+        {
+          "op": "start"
+        },
+        {
+          "op": "advance",
+          "toMs": 1790337660000
+        },
+        {
+          "op": "cancel"
+        }
+      ],
+      "expected": {
+        "state": "cancelled",
+        "session": {
+          "state": "cancelled",
+          "selectedDurationMinutes": 15,
+          "armedAtMs": 1790337600000,
+          "sleepDetectedAtMs": null,
+          "expectedWakeAtMs": null,
+          "failSafeWakeAtMs": 1790339400000
+        },
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339400000,
+            "kind": "fail_safe",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": []
+      }
+    },
+    {
+      "name": "resume-overdue-nap",
+      "ops": [
+        {
+          "op": "select",
+          "minutes": 20
+        },
+        {
+          "op": "start"
+        },
+        {
+          "op": "sleepDetected",
+          "atMs": 1790337900000
+        },
+        {
+          "op": "resume",
+          "atMs": 1790340000000
+        }
+      ],
+      "expected": {
+        "state": "waking",
+        "session": {
+          "state": "waking",
+          "selectedDurationMinutes": 20,
+          "armedAtMs": 1790337600000,
+          "sleepDetectedAtMs": 1790337900000,
+          "expectedWakeAtMs": 1790339100000,
+          "failSafeWakeAtMs": 1790339700000
+        },
+        "remainingMs": null,
+        "scheduledAlarms": [
+          {
+            "atMs": 1790339700000,
+            "kind": "fail_safe",
+            "sessionId": "nap-1"
+          },
+          {
+            "atMs": 1790339100000,
+            "kind": "nap_wake",
+            "sessionId": "nap-1"
+          }
+        ],
+        "wakePatternsPlayed": [
+          {
+            "steps": [
+              {
+                "kind": "pulse",
+                "intensity": 0.35,
+                "durationMs": 120
+              },
+              {
+                "kind": "pause",
+                "durationMs": 900
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.45,
+                "durationMs": 140
+              },
+              {
+                "kind": "pause",
+                "durationMs": 700
+              },
+              {
+                "kind": "pulse",
+                "intensity": 0.55,
+                "durationMs": 160
+              },
+              {
+                "kind": "pause",
+                "durationMs": 1400
+              }
+            ],
+            "repeatIntervalMs": 4000
+          }
+        ]
+      }
+    }
+  ]
+}

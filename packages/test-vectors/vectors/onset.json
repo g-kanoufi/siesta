@@ -1,0 +1,1074 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "hr-drop-calm",
+      "config": {
+        "baselineWindowMs": 120000,
+        "confirmationWindowMs": 180000,
+        "heartRateDropFraction": 0.08,
+        "motionThreshold": 0.05
+      },
+      "samples": [
+        {
+          "atMs": 1790337600000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337610000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337620000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337630000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337640000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337650000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337660000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337670000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337680000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337690000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337700000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337710000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337720000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337730000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337740000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337750000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337760000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337770000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337780000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337790000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337800000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337810000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337820000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337830000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337840000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337850000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337860000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337870000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337880000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337890000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337900000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337910000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337920000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337930000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337940000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337950000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337960000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337970000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337980000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337990000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338000000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338010000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338020000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338030000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338040000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338050000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338060000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338070000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338080000,
+          "heartRate": 60,
+          "motion": 0.01
+        }
+      ],
+      "expectedOnsetAtMs": 1790337730000
+    },
+    {
+      "name": "motion-only",
+      "config": {
+        "baselineWindowMs": 120000,
+        "confirmationWindowMs": 180000,
+        "heartRateDropFraction": 0.08,
+        "motionThreshold": 0.05
+      },
+      "samples": [
+        {
+          "atMs": 1790337600000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337610000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337620000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337630000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337640000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337650000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337660000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337670000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337680000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337690000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337700000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337710000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337720000,
+          "motion": 0.3
+        },
+        {
+          "atMs": 1790337730000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337740000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337750000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337760000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337770000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337780000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337790000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337800000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337810000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337820000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337830000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337840000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337850000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337860000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337870000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337880000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337890000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337900000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337910000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337920000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337930000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337940000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337950000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337960000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337970000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337980000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337990000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338000000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338010000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338020000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338030000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338040000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338050000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338060000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338070000,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338080000,
+          "motion": 0.01
+        }
+      ],
+      "expectedOnsetAtMs": 1790337730000
+    },
+    {
+      "name": "movement-resets-window",
+      "config": {
+        "baselineWindowMs": 120000,
+        "confirmationWindowMs": 180000,
+        "heartRateDropFraction": 0.08,
+        "motionThreshold": 0.05
+      },
+      "samples": [
+        {
+          "atMs": 1790337600000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337610000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337620000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337630000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337640000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337650000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337660000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337670000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337680000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337690000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337700000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337710000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337720000,
+          "heartRate": 70,
+          "motion": 0.2
+        },
+        {
+          "atMs": 1790337730000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337740000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337750000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337760000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337770000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337780000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337790000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337800000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337810000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337820000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337830000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337840000,
+          "heartRate": 62,
+          "motion": 0.4
+        },
+        {
+          "atMs": 1790337850000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337860000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337870000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337880000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337890000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337900000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337910000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337920000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337930000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337940000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337950000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337960000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337970000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337980000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790337990000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338000000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338010000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338020000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338030000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338040000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338050000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338060000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338070000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338080000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338090000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338100000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338110000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338120000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338130000,
+          "heartRate": 60,
+          "motion": 0.01
+        },
+        {
+          "atMs": 1790338140000,
+          "heartRate": 60,
+          "motion": 0.01
+        }
+      ],
+      "expectedOnsetAtMs": 1790337850000
+    },
+    {
+      "name": "never-sleeps",
+      "config": {
+        "baselineWindowMs": 120000,
+        "confirmationWindowMs": 180000,
+        "heartRateDropFraction": 0.08,
+        "motionThreshold": 0.05
+      },
+      "samples": [
+        {
+          "atMs": 1790337600000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337610000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337620000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337630000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337640000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337650000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337660000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337670000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337680000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337690000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337700000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337710000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337720000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337730000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337740000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337750000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337760000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337770000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337780000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337790000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337800000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337810000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337820000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337830000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337840000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337850000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337860000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337870000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337880000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337890000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337900000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337910000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337920000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337930000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337940000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337950000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337960000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337970000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337980000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790337990000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338000000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338010000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338020000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338030000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338040000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338050000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338060000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338070000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338080000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338090000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338100000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338110000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338120000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338130000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338140000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338150000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338160000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338170000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338180000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338190000,
+          "heartRate": 70,
+          "motion": 0.1
+        },
+        {
+          "atMs": 1790338200000,
+          "heartRate": 70,
+          "motion": 0.1
+        }
+      ],
+      "expectedOnsetAtMs": null
+    }
+  ]
+}

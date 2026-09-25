@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "armedAtMs": 1790337600000,
+      "durationMinutes": 20,
+      "graceMinutes": 15,
+      "failSafeWakeAtMs": 1790339700000
+    },
+    {
+      "armedAtMs": 1790337600000,
+      "durationMinutes": 90,
+      "graceMinutes": 15,
+      "failSafeWakeAtMs": 1790343900000
+    },
+    {
+      "armedAtMs": 1790337600000,
+      "durationMinutes": 20,
+      "graceMinutes": 0,
+      "failSafeWakeAtMs": 1790338800000
+    }
+  ]
+}

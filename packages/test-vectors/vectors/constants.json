@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "values": {
+    "napStates": [
+      "idle",
+      "selecting_duration",
+      "armed",
+      "waiting_for_sleep",
+      "sleeping",
+      "waking",
+      "completed",
+      "cancelled",
+      "error"
+    ],
+    "durationPresets": [
+      {
+        "minutes": 10,
+        "id": "quick-reset",
+        "shortLabel": "10 min",
+        "description": "Quick reset"
+      },
+      {
+        "minutes": 15,
+        "id": "short-break",
+        "shortLabel": "15 min",
+        "description": "Short break"
+      },
+      {
+        "minutes": 20,
+        "id": "power-nap",
+        "shortLabel": "20 min",
+        "description": "Classic power nap",
+        "recommended": true
+      },
+      {
+        "minutes": 25,
+        "id": "extended-rest",
+        "shortLabel": "25 min",
+        "description": "Extended rest"
+      },
+      {
+        "minutes": 30,
+        "id": "longer-recharge",
+        "shortLabel": "30 min",
+        "description": "Longer recharge"
+      },
+      {
+        "minutes": 45,
+        "id": "deep-rest",
+        "shortLabel": "45 min",
+        "description": "Deep rest"
+      },
+      {
+        "minutes": 60,
+        "id": "full-hour",
+        "shortLabel": "60 min",
+        "description": "A full hour"
+      },
+      {
+        "minutes": 90,
+        "id": "sleep-cycle",
+        "shortLabel": "90 min",
+        "description": "Full sleep cycle"
+      }
+    ],
+    "failSafeGraceMinutes": 15,
+    "onsetConfig": {
+      "baselineWindowMs": 120000,
+      "confirmationWindowMs": 180000,
+      "heartRateDropFraction": 0.08,
+      "motionThreshold": 0.05
+    },
+    "wakePatterns": {
+      "gentle": {
+        "steps": [
+          {
+            "kind": "pulse",
+            "intensity": 0.35,
+            "durationMs": 120
+          },
+          {
+            "kind": "pause",
+            "durationMs": 900
+          },
+          {
+            "kind": "pulse",
+            "intensity": 0.45,
+            "durationMs": 140
+          },
+          {
+            "kind": "pause",
+            "durationMs": 700
+          },
+          {
+            "kind": "pulse",
+            "intensity": 0.55,
+            "durationMs": 160
+          },
+          {
+            "kind": "pause",
+            "durationMs": 1400
+          }
+        ],
+        "repeatIntervalMs": 4000
+      },
+      "normal": {
+        "steps": [
+          {
+            "kind": "pulse",
+            "intensity": 0.5,
+            "durationMs": 140
+          },
+          {
+            "kind": "pause",
+            "durationMs": 600
+          },
+          {
+            "kind": "pulse",
+            "intensity": 0.65,
+            "durationMs": 160
+          },
+          {
+            "kind": "pause",
+            "durationMs": 450
+          },
+          {
+            "kind": "pulse",
+            "intensity": 0.8,
+            "durationMs": 200
+          },
+          {
+            "kind": "pause",
+            "durationMs": 900
+          }
+        ],
+        "repeatIntervalMs": 3000
+      },
+      "strong": {
+        "steps": [
+          {
+            "kind": "pulse",
+            "intensity": 0.65,
+            "durationMs": 160
+          },
+          {
+            "kind": "pause",
+            "durationMs": 350
+          },
+          {
+            "kind": "pulse",
+            "intensity": 0.85,
+            "durationMs": 200
+          },
+          {
+            "kind": "pause",
+            "durationMs": 250
+          },
+          {
+            "kind": "pulse",
+            "intensity": 1,
+            "durationMs": 280
+          },
+          {
+            "kind": "pulse",
+            "intensity": 1,
+            "durationMs": 200
+          },
+          {
+            "kind": "pause",
+            "durationMs": 500
+          }
+        ],
+        "repeatIntervalMs": 2400
+      }
+    },
+    "tokens": {
+      "colors": {
+        "light": {
+          "background": "#FAF6EF",
+          "surface": "#FFFDF8",
+          "surfaceElevated": "#F1EAE0",
+          "textPrimary": "#231E16",
+          "textSecondary": "#6B6252",
+          "textTertiary": "#8F8571",
+          "accent": "#BF7433",
+          "onAccent": "#26180A",
+          "accentSoft": "#F0DEC9",
+          "success": "#5F7F57",
+          "warning": "#9A7A2E",
+          "danger": "#A8503F",
+          "scrim": "#EDE5D7"
+        },
+        "dark": {
+          "background": "#161310",
+          "surface": "#201B16",
+          "surfaceElevated": "#2B241C",
+          "textPrimary": "#F3EDE3",
+          "textSecondary": "#B3A894",
+          "textTertiary": "#7F7666",
+          "accent": "#E8A15C",
+          "onAccent": "#2A1C0D",
+          "accentSoft": "#3B2E1E",
+          "success": "#9DBE95",
+          "warning": "#E3C983",
+          "danger": "#DE8A76",
+          "scrim": "#0E0C0A"
+        }
+      },
+      "typography": {
+        "title": {
+          "family": "system",
+          "size": 24,
+          "weight": 600,
+          "lineHeight": 1.2,
+          "letterSpacing": 0.2
+        },
+        "heroNumber": {
+          "family": "system",
+          "size": 56,
+          "weight": 600,
+          "lineHeight": 1,
+          "letterSpacing": -0.5
+        },
+        "heroUnit": {
+          "family": "system",
+          "size": 22,
+          "weight": 500,
+          "lineHeight": 1,
+          "letterSpacing": 0
+        },
+        "body": {
+          "family": "system",
+          "size": 17,
+          "weight": 400,
+          "lineHeight": 1.35,
+          "letterSpacing": 0
+        },
+        "supporting": {
+          "family": "system",
+          "size": 15,
+          "weight": 400,
+          "lineHeight": 1.3,
+          "letterSpacing": 0
+        },
+        "action": {
+          "family": "system",
+          "size": 17,
+          "weight": 600,
+          "lineHeight": 1.2,
+          "letterSpacing": 0
+        },
+        "caption": {
+          "family": "system",
+          "size": 13,
+          "weight": 400,
+          "lineHeight": 1.3,
+          "letterSpacing": 0.1
+        }
+      },
+      "spacing": {
+        "xxs": 2,
+        "xs": 4,
+        "sm": 8,
+        "md": 12,
+        "lg": 16,
+        "xl": 20,
+        "xxl": 28,
+        "screen": 40
+      },
+      "radii": {
+        "pill": 999,
+        "card": 16,
+        "subtle": 8
+      },
+      "motion": {
+        "springGentle": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 120,
+            "damping": 16,
+            "mass": 1
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 200
+          }
+        },
+        "springStandard": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 200,
+            "damping": 20,
+            "mass": 1
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 150
+          }
+        },
+        "springSnappy": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 400,
+            "damping": 26,
+            "mass": 0.9
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 100
+          }
+        },
+        "springBounce": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 260,
+            "damping": 13,
+            "mass": 1
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 150
+          }
+        },
+        "fadeIn": {
+          "timing": {
+            "type": "timing",
+            "durationMs": 220,
+            "easing": "easeOut"
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 120
+          }
+        },
+        "fadeOut": {
+          "timing": {
+            "type": "timing",
+            "durationMs": 160,
+            "easing": "easeIn"
+          },
+          "reducedMotion": {
+            "kind": "none",
+            "durationMs": 0
+          }
+        },
+        "scaleIn": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 240,
+            "damping": 22,
+            "mass": 1
+          },
+          "reducedMotion": {
+            "kind": "fade",
+            "durationMs": 150
+          }
+        },
+        "scaleOut": {
+          "timing": {
+            "type": "timing",
+            "durationMs": 140,
+            "easing": "easeIn"
+          },
+          "reducedMotion": {
+            "kind": "none",
+            "durationMs": 0
+          }
+        },
+        "press": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 500,
+            "damping": 30,
+            "mass": 0.8
+          },
+          "reducedMotion": {
+            "kind": "none",
+            "durationMs": 0
+          }
+        }
+      },
+      "ambient": {
+        "breathe": {
+          "periodMs": 4200,
+          "amplitudeScale": 0.018,
+          "disabledUnderReduceMotion": true
+        },
+        "sway": {
+          "periodMs": 6200,
+          "amplitudeDegrees": 1.6,
+          "disabledUnderReduceMotion": true
+        },
+        "rise": {
+          "spring": {
+            "type": "spring",
+            "stiffness": 90,
+            "damping": 12,
+            "mass": 1
+          },
+          "disabledUnderReduceMotion": true
+        }
+      },
+      "accessibility": {
+        "touchTarget": {
+          "minPt": 44,
+          "minDp": 48
+        },
+        "contrast": {
+          "normalTextMin": 4.5,
+          "largeTextMin": 3
+        },
+        "requireNonColorStatus": true
+      }
+    }
+  }
+}
