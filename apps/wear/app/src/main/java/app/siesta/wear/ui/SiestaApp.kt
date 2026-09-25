@@ -3,6 +3,8 @@ package app.siesta.wear.ui
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -87,6 +91,7 @@ fun SiestaApp(viewModel: SessionViewModel) {
                 SelectionScreen(viewModel, selected)
             NapState.ARMED, NapState.WAITING_FOR_SLEEP ->
                 StatusScreen(
+                    view?.state ?: NapState.ARMED,
                     "Waiting for sleep…",
                     failSafeDetail(view?.nextDeadlineMs),
                     "Cancel",
@@ -95,19 +100,19 @@ fun SiestaApp(viewModel: SessionViewModel) {
                     viewModel.cancel()
                 }
             NapState.SLEEPING ->
-                StatusScreen("Sleeping", remainingDetail(view?.remainingMs), "Cancel") {
+                StatusScreen(NapState.SLEEPING, "Sleeping", remainingDetail(view?.remainingMs), "Cancel") {
                     viewModel.cancel()
                 }
             NapState.WAKING ->
-                StatusScreen("Welcome back.", "", "I'm awake") {
+                StatusScreen(NapState.WAKING, "Welcome back.", "", "I'm awake") {
                     viewModel.acknowledgeWake()
                 }
             NapState.COMPLETED ->
-                StatusScreen("Welcome back.", "", "Done") {
+                StatusScreen(NapState.COMPLETED, "Welcome back.", "", "Done") {
                     viewModel.acknowledgeWake()
                 }
             NapState.CANCELLED ->
-                StatusScreen("Cancelled", "", "Done") { viewModel.cancel() }
+                StatusScreen(NapState.CANCELLED, "Cancelled", "", "Done") { viewModel.cancel() }
             NapState.ERROR ->
                 ErrorScreen { viewModel.beginManually() }
         }
@@ -185,19 +190,25 @@ private fun SelectionScreen(viewModel: SessionViewModel, selected: Int) {
 
 @Composable
 private fun StatusScreen(
+    state: NapState,
     title: String,
     detail: String,
     actionLabel: String,
     debugAction: (() -> Unit)? = null,
     onAction: () -> Unit,
 ) {
+    // The wake moment arrives soft — content fades in over ~350 ms.
+    val alpha = remember { Animatable(if (state == NapState.WAKING) 0f else 1f) }
+    LaunchedEffect(state) {
+        if (alpha.value == 0f) alpha.animateTo(1f, tween(350))
+    }
     Column(
-        modifier = Modifier.fillMaxSize().padding(12.dp),
+        modifier = Modifier.fillMaxSize().padding(12.dp).alpha(alpha.value),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Hammock(
-            state = NapState.SLEEPING,
+            state = state,
             accent = MaterialTheme.colors.primary,
             post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
             modifier = Modifier.size(width = 64.dp, height = 28.dp),

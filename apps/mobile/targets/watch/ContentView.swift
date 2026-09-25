@@ -39,19 +39,13 @@ struct ContentView: View {
                 primaryAction: viewModel.cancel
             )
         case .waking:
-            statusView(
-                title: "Welcome back.",
-                detail: "",
-                primaryLabel: "I'm awake",
-                primaryAction: viewModel.acknowledgeWake
-            )
+            wakingView(primaryLabel: "I'm awake") {
+                viewModel.acknowledgeWake()
+            }
         case .completed:
-            statusView(
-                title: "Welcome back.",
-                detail: "",
-                primaryLabel: "Done",
-                primaryAction: { viewModel.acknowledgeWake() }
-            )
+            wakingView(primaryLabel: "Done") {
+                viewModel.acknowledgeWake()
+            }
         case .cancelled:
             statusView(
                 title: "Cancelled",
@@ -161,6 +155,36 @@ struct ContentView: View {
         .padding(.horizontal, 4)
     }
 
+    /// The wake moment (§14): the screen arrives soft, the hammock rises and
+    /// settles, then the copy brightens in. Under Reduce Motion it all
+    /// appears at once — motion never carries meaning alone.
+    @State private var wakeAppeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private func wakingView(
+        primaryLabel: String,
+        primaryAction: @escaping () -> Void
+    ) -> some View {
+        VStack(spacing: 8) {
+            HammockGlyph(state: viewModel.view?.state ?? .idle)
+            Text("Welcome back.")
+                .font(.headline)
+            Button(primaryLabel, action: primaryAction)
+                .buttonStyle(.borderedProminent)
+        }
+        .padding(.horizontal, 4)
+        .opacity(wakeAppeared ? 1 : 0)
+        .onAppear {
+            wakeAppeared = false
+            if reduceMotion {
+                wakeAppeared = true
+            } else {
+                withAnimation(.easeOut(duration: 0.35)) { wakeAppeared = true }
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
     private var remainingDetail: String {
         guard let ms = viewModel.view?.remainingMs else { return "" }
         let total = Int(ceil(Double(ms) / 1000))
@@ -174,10 +198,16 @@ struct ContentView: View {
     }
 }
 
-/// The geometric hammock mark — two posts, one dip. Deliberately minimal:
-/// the watch face is small and the mark must read at a glance.
+/// The geometric hammock mark — two posts, one dip. Motion follows the
+/// shared design tokens (packages/design-tokens/src/motion.ts):
+/// breathe 4.2s/1.8% while waiting, sway 6.2s/1.6° while sleeping,
+/// a one-shot spring rise on wake, and a small dip on armed.
+/// Everything disables under Reduce Motion.
 struct HammockGlyph: View {
     let state: NapState
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var lift: CGFloat = 0
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -194,14 +224,32 @@ struct HammockGlyph: View {
                 .frame(width: 64, height: 18)
         }
         .frame(height: 30)
-        .rotationEffect(.degrees(state == .sleeping ? 1.5 : 0), anchor: .center)
+        .offset(y: lift)
+        .scaleEffect(state == .waitingForSleep || state == .armed ? 1.018 : 1)
+        .rotationEffect(.degrees(state == .sleeping ? 1.6 : 0), anchor: .center)
         .animation(
-            state == .sleeping
-                ? .easeInOut(duration: 2.4).repeatForever(autoreverses: true)
-                : .default,
+            reduceMotion ? nil :
+                state == .sleeping
+                    ? .easeInOut(duration: 3.1).repeatForever(autoreverses: true)
+                    : state == .waitingForSleep || state == .armed
+                        ? .easeInOut(duration: 2.1).repeatForever(autoreverses: true)
+                        : .default,
             value: state
         )
         .accessibilityHidden(true)
+        .onAppear { updateLift(for: state) }
+        .onChange(of: state) { updateLift(for: $0) }
+    }
+
+    /// Waking/completed: the hammock starts low and springs up to rest.
+    private func updateLift(for newState: NapState) {
+        guard !reduceMotion else { lift = 0; return }
+        if newState == .waking || newState == .completed {
+            lift = 10
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.63)) { lift = 0 }
+        } else {
+            lift = 0
+        }
     }
 }
 
