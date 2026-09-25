@@ -38,6 +38,7 @@ class SessionViewModel(context: Context) : ViewModel() {
     private var unsubscribe: (() -> Unit)? = null
     private var lastLoggedState: NapState? = null
     private var monitorRunning = false
+    private var sleep: HealthServicesSleepDetector? = null
 
     private val _view = MutableStateFlow<NapViewState?>(null)
     val view: StateFlow<NapViewState?> = _view.asStateFlow()
@@ -55,9 +56,10 @@ class SessionViewModel(context: Context) : ViewModel() {
         ProbeLog.init(appContext)
         ProbeLog.log("boot", ProbeEnv.capture(appContext))
         viewModelScope.launch {
+            sleep = HealthServicesSleepDetector(appContext)
             val m = NapSessionManager.resume(
                 clock = SystemClock,
-                sleep = HealthServicesSleepDetector(appContext),
+                sleep = sleep!!,
                 scheduler = AlarmSchedulerService(appContext),
                 haptics = WearHaptics(appContext),
                 store = PreferencesSessionStore(appContext),
@@ -105,6 +107,11 @@ class SessionViewModel(context: Context) : ViewModel() {
             NapMonitorService.stop(appContext)
         }
         if (state == NapState.IDLE) ProbeLog.flush()
+    }
+
+    /** DEBUG-only: skips real detection so wake/haptic/kill tests need no sleep. */
+    fun simulateSleep() {
+        sleep?.debugSimulateSleep(System.currentTimeMillis())
     }
 
     fun selectDuration(minutes: Int) {

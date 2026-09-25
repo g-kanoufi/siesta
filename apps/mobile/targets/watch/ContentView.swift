@@ -23,7 +23,8 @@ struct ContentView: View {
                 title: "Waiting for sleep…",
                 detail: failSafeDetail,
                 primaryLabel: "Cancel",
-                primaryAction: viewModel.cancel
+                primaryAction: viewModel.cancel,
+                debugAction: viewModel.simulateSleep
             )
         case .sleeping:
             statusView(
@@ -115,7 +116,8 @@ struct ContentView: View {
         title: String,
         detail: String,
         primaryLabel: String,
-        primaryAction: @escaping () -> Void
+        primaryAction: @escaping () -> Void,
+        debugAction: (() -> Void)? = nil
     ) -> some View {
         VStack(spacing: 8) {
             HammockGlyph(state: viewModel.view?.state ?? .idle)
@@ -134,6 +136,14 @@ struct ContentView: View {
                 Button(primaryLabel, action: primaryAction)
                     .buttonStyle(.borderedProminent)
             }
+            #if DEBUG
+            if let debugAction {
+                Button("Simulate sleep", action: debugAction)
+                    .font(.footnote)
+                    .foregroundStyle(.tertiary)
+                    .buttonStyle(.plain)
+            }
+            #endif
         }
         .padding(.horizontal, 4)
     }

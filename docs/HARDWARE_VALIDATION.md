@@ -100,6 +100,11 @@ worn snugly, phone left alone. **Record the experiment id** against each nap
 (the session id `nap-*` in the log is the join key). Run E1 first — a broken
 baseline invalidates everything downstream.
 
+**Debug shortcut:** in debug builds, a "Simulate sleep" control on the
+"Waiting for sleep" screen fires the real onset path (`onset` logged with
+`"simulated": true`) — use it to run E3/E4/E5/E7/E8/E10 without actually
+sleeping. It is DEBUG-gated and never ships.
+
 ### E1 — Sensor baseline (awake)
 Arm a nap, stay awake and reasonably still for 15 min, then cancel.
 **Look for:** `hr_sample` cadence p50, `hr_gap` count, `detector_start`,

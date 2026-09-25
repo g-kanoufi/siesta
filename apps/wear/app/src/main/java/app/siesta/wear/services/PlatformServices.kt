@@ -318,6 +318,13 @@ class HealthServicesSleepDetector(private val context: Context) : SleepDetection
         lastSampleAtMs = null
     }
 
+    /** Dev-only Phase-4 hook: fires listeners as if real detection ran. */
+    fun debugSimulateSleep(atMs: EpochMs) {
+        if (listeners.isEmpty()) return
+        ProbeLog.log("onset", mapOf("atMs" to atMs, "mode" to "exercise_client", "simulated" to true))
+        listeners.values.forEach { it(atMs) }
+    }
+
     override fun stop() {
         ProbeLog.log("detector_stop", mapOf("mode" to "exercise_client"))
         if (exercising) {

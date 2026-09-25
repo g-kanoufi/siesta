@@ -13,6 +13,7 @@ final class SessionViewModel: ObservableObject {
     private var manager: NapSessionManager?
     private var unsubscribe: (() -> Void)?
     private var lastLoggedState: NapState?
+    private var sleepService: SleepDetectionService?
 
     func start() async {
         guard manager == nil else { return }
@@ -25,6 +26,7 @@ final class SessionViewModel: ObservableObject {
         let sleep: SleepDetectionService = ProbeConfig.detectorMode == "ers"
             ? ExtendedRuntimeSleepDetector()
             : HealthKitSleepDetector()
+        sleepService = sleep
         let m = await NapSessionManager.resume(
             clock: SystemClock(),
             sleep: sleep,
@@ -65,6 +67,14 @@ final class SessionViewModel: ObservableObject {
     func tick() {
         manager?.tick()
         refresh()
+    }
+
+    /// DEBUG-only: skips real detection and fires the onset listeners.
+    /// Lets hardware experiments (wake, haptics, kill/recovery) run without
+    /// the tester actually falling asleep.
+    func simulateSleep() {
+        (sleepService as? SimulatedSleepFiring)?
+            .debugSimulateSleep(atMs: EpochMs(Date().timeIntervalSince1970 * 1000))
     }
 
     func selectDuration(_ minutes: Int) {

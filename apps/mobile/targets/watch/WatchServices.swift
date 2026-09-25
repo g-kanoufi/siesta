@@ -352,7 +352,13 @@ final class HeartRateProbeStream {
 ///
 /// Honest limitation: this is a heuristic, not a polysomnograph. The UI copy
 /// must never claim medical-grade detection (see docs/adr/0003).
-final class HealthKitSleepDetector: NSObject, SleepDetectionService, HKWorkoutSessionDelegate {
+/// Dev-only Phase-4 hook: fires the detector's listeners as if real
+/// detection ran. Only invoked from DEBUG-gated UI.
+protocol SimulatedSleepFiring {
+    func debugSimulateSleep(atMs: EpochMs)
+}
+
+final class HealthKitSleepDetector: NSObject, SleepDetectionService, HKWorkoutSessionDelegate, SimulatedSleepFiring {
     private let store = HKHealthStore()
     private var workout: HKWorkoutSession?
     private var stream: HeartRateProbeStream?
@@ -390,6 +396,12 @@ final class HealthKitSleepDetector: NSObject, SleepDetectionService, HKWorkoutSe
         }
         stream.start()
         self.stream = stream
+    }
+
+    func debugSimulateSleep(atMs: EpochMs) {
+        guard !listeners.isEmpty else { return }
+        ProbeLog.shared.log("onset", ["atMs": atMs, "mode": "workout", "simulated": true])
+        listeners.values.forEach { $0(atMs) }
     }
 
     func stop() {
@@ -448,7 +460,7 @@ final class HealthKitSleepDetector: NSObject, SleepDetectionService, HKWorkoutSe
 /// runs while it provides background runtime (30-minute cap). Probe question:
 /// does ERS alone keep HR flowing at usable cadence (lower battery than a
 /// workout)? Gaps and the 30-min invalidation are logged like everything else.
-final class ExtendedRuntimeSleepDetector: NSObject, SleepDetectionService, WKExtendedRuntimeSessionDelegate {
+final class ExtendedRuntimeSleepDetector: NSObject, SleepDetectionService, WKExtendedRuntimeSessionDelegate, SimulatedSleepFiring {
     private let store = HKHealthStore()
     private var ers: WKExtendedRuntimeSession?
     private var stream: HeartRateProbeStream?
@@ -478,6 +490,12 @@ final class ExtendedRuntimeSleepDetector: NSObject, SleepDetectionService, WKExt
         }
         stream.start()
         self.stream = stream
+    }
+
+    func debugSimulateSleep(atMs: EpochMs) {
+        guard !listeners.isEmpty else { return }
+        ProbeLog.shared.log("onset", ["atMs": atMs, "mode": "ers", "simulated": true])
+        listeners.values.forEach { $0(atMs) }
     }
 
     func stop() {

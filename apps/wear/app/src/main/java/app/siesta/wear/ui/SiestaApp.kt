@@ -59,7 +59,12 @@ fun SiestaApp(viewModel: SessionViewModel) {
             NapState.IDLE, NapState.SELECTING_DURATION ->
                 SelectionScreen(viewModel, selected)
             NapState.ARMED, NapState.WAITING_FOR_SLEEP ->
-                StatusScreen("Waiting for sleep…", failSafeDetail(view?.nextDeadlineMs), "Cancel") {
+                StatusScreen(
+                    "Waiting for sleep…",
+                    failSafeDetail(view?.nextDeadlineMs),
+                    "Cancel",
+                    debugAction = { viewModel.simulateSleep() },
+                ) {
                     viewModel.cancel()
                 }
             NapState.SLEEPING ->
@@ -147,6 +152,7 @@ private fun StatusScreen(
     title: String,
     detail: String,
     actionLabel: String,
+    debugAction: (() -> Unit)? = null,
     onAction: () -> Unit,
 ) {
     Column(
@@ -181,6 +187,16 @@ private fun StatusScreen(
             ) { Text(actionLabel) }
         } else {
             Button(onClick = onAction) { Text(actionLabel) }
+        }
+        if (BuildConfig.DEBUG && debugAction != null) {
+            Text(
+                text = "Simulate sleep",
+                fontSize = 9.sp,
+                color = MaterialTheme.colors.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(top = 2.dp)
+                    .clickable { debugAction() },
+            )
         }
     }
 }
