@@ -1,0 +1,22 @@
+{
+  "name": "siesta",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Siesta — a nap timer that waits for you to fall asleep.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test:vectors": "npm run generate -w @siesta/test-vectors"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
