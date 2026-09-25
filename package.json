@@ -11,7 +11,8 @@
     "test": "npm test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint packages apps --max-warnings 0",
-    "test:vectors": "npm run generate -w @siesta/test-vectors"
+    "test:vectors": "npm run generate -w @siesta/test-vectors",
+    "probe:report": "node scripts/probe-report.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

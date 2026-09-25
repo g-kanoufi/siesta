@@ -48,11 +48,19 @@ that breaks AA fails CI — accessibility is enforced, not hoped for.
 
 ## Platform/E2E (Phases 5–7, on hardware)
 
-- [ ] watchOS: HealthKit permission flows, HKWorkoutSession cadence, haptics,
-      UNNotificationRequest delivery while suspended, complication
-- [ ] Wear OS: Health Connect/Health Services, foreground service,
-      VibrationEffect patterns, Tile
+Milestone 1 is the sleep-detection/wake loop itself — see
+[docs/HARDWARE_VALIDATION.md](docs/HARDWARE_VALIDATION.md) for the experiment
+protocol (E1–E12), the probe event schema, and log-pull instructions. Both
+watch apps emit `probe.jsonl`; `npm run probe:report` turns it into the
+answers table.
+
+- [x] watchOS: HealthKit permission flow logging, HKWorkoutSession cadence,
+      UNNotificationRequest delivery timing, ERS smart-alarm wake channel —
+      probe events `hr_auth`, `hr_sample`, `alarm_*`, `ers_*`
+- [x] Wear OS: Health Services exercise session, health-type foreground
+      service, exact-alarm permission check, WakeReceiver env capture
 - [ ] Recovery matrix: force-quit, watch restart, phone restart, Bluetooth
-      drop, permission revoked mid-nap, midnight/DST/timezone, low battery
+      drop, permission revoked mid-nap, midnight/DST/timezone, low battery —
+      E10 covers kill; rest scheduled after M1 findings
 - [ ] Accessibility: VoiceOver, TalkBack, Reduce Motion, larger text,
       high contrast

@@ -97,6 +97,16 @@ struct ContentView: View {
 
             Button("Start siesta") { viewModel.begin() }
                 .buttonStyle(.borderedProminent)
+
+            #if DEBUG
+            Button("probe") { viewModel.showProbe = true }
+                .font(.footnote)
+                .foregroundStyle(.tertiary)
+                .buttonStyle(.plain)
+                .sheet(isPresented: $viewModel.showProbe) {
+                    ProbeDebugView()
+                }
+            #endif
         }
         .padding(.horizontal, 4)
     }

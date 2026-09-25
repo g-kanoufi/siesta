@@ -61,10 +61,19 @@ Known constraints from real-world testing (NapValidator findings):
 
 ## What still needs physical-device validation
 
+All items below are instrumented and assigned to experiments in
+[HARDWARE_VALIDATION.md](HARDWARE_VALIDATION.md) — the watch apps log a
+`probe.jsonl` event stream designed to answer each of these with data.
+
 - [ ] HR sampling cadence during `.mindAndBody` workout on current watchOS
+      → E1 (`hr_sample` cadence, `hr_gap`)
 - [ ] Whether `WKExtendedRuntimeSession` alone suffices (lower battery) or a
-      workout session is required for HR streaming
-- [ ] Actual onset-detection accuracy vs. user-perceived "it noticed"
-- [ ] Battery drain per nap (target: <5% for a 90-min session)
-- [ ] Wear OS `MeasureClient` HR cadence on Pixel Watch vs. Galaxy Watch
-- [ ] Exact-alarm behavior when watch is in battery-saver / bedtime mode
+      workout session is required for HR streaming → E6 (`detectorMode=ers`)
+- [ ] Actual onset-detection accuracy vs. user-perceived "it noticed" → E2
+- [ ] Battery drain per nap (target: <5% for a 90-min session) → E11
+- [ ] Wear OS `MeasureClient` HR cadence on Pixel Watch vs. Galaxy Watch → E1
+      (Wear uses `ExerciseClient` — same question, same events)
+- [ ] Exact-alarm behavior when watch is in battery-saver / bedtime mode → E9
+      (`canScheduleExactAlarms`, `powerSave`, `alarm_delivered.lateMs`)
+- [ ] Whether the smart-alarm ERS channel (`WKBackgroundModes: alarm`) survives
+      app termination and wakes more reliably than a notification → E4, E5, E10
