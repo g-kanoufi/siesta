@@ -1,0 +1,69 @@
+---
+import "@fontsource-variable/fraunces";
+import "@fontsource/instrument-sans";
+import "../styles/global.css";
+import { dark } from "@siesta/design-tokens";
+import HammockMark from "../components/HammockMark.astro";
+
+const cssVars = {
+  "--bg": dark.background,
+  "--surface": dark.surface,
+  "--surface-elevated": dark.surfaceElevated,
+  "--text-primary": dark.textPrimary,
+  "--text-secondary": dark.textSecondary,
+  "--text-tertiary": dark.textTertiary,
+  "--accent": dark.accent,
+  "--on-accent": dark.onAccent,
+  "--accent-soft": dark.accentSoft,
+  "--font-display": '"Fraunces Variable", Georgia, serif',
+  "--font-body": '"Instrument Sans", system-ui, sans-serif',
+};
+---
+
+{/* Rendered only to be screenshotted into public/og.png (1200×630). */}
+<html lang="en" style={cssVars}>
+  <head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>og</title></head>
+  <body>
+    <main class="card">
+      <HammockMark size={120} />
+      <h1>Sleep first.<br />Count down second.</h1>
+      <p class="lede">A tiny nap timer that waits for you to fall asleep.</p>
+      <p class="foot">siesta.app · €2.99 once · Apple Watch &amp; Wear OS</p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .card {
+    width: 1200px;
+    height: 630px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    text-align: center;
+    background:
+      radial-gradient(60rem 42rem at 78% 18%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%),
+      var(--bg);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "opsz" 144;
+    font-weight: 480;
+    font-size: 4.6rem;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+  .lede {
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+  }
+  .foot {
+    position: absolute;
+    bottom: 3rem;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+  }
+</style>

@@ -43,3 +43,4 @@ apps/mobile/targets/watch/Domain/
 
 # Astro
 .astro/
+.playwright-mcp/

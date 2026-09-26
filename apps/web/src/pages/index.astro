@@ -36,7 +36,7 @@ const steps = [
   {
     n: "03",
     title: "Drift",
-    body: "A workout-grade heart-rate stream notices the settled rhythm of sleep onset. The timer starts now — not before.",
+    body: "Your watch reads your heart rate settle into sleep. The timer starts then — not before.",
   },
   {
     n: "04",
@@ -63,7 +63,32 @@ const steps = [
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://siesta.app" />
+    <meta property="og:image" content="https://siesta.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Siesta — a nap timer that waits for sleep" />
+    <meta
+      name="twitter:description"
+      content="Choose how long you want to nap. Siesta notices when you actually fall asleep — and wakes you gently, right on time."
+    />
+    <meta name="twitter:image" content="https://siesta.app/og.png" />
     <meta name="theme-color" content={dark.background} />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Siesta",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "watchOS, Wear OS",
+        "offers": {
+          "@type": "Offer",
+          "price": "2.99",
+          "priceCurrency": "EUR"
+        },
+        "description": "A tiny nap timer that waits for you to fall asleep. Choose a duration, drift off, wake gently on time."
+      }
+    </script>
   </head>
   <body>
     <header class="nav rise">
@@ -88,7 +113,8 @@ const steps = [
           </p>
           <div class="cta rise" style="animation-delay:.28s">
             <a class="pill" href="#price">€2.99 · one purchase</a>
-            <span class="platforms">Apple Watch · Wear OS</span>
+            <span class="store-pill">Coming to Apple&nbsp;Watch</span>
+            <span class="store-pill">Coming to Wear&nbsp;OS</span>
           </div>
         </div>
         <div class="hero-watch rise" style="animation-delay:.18s">
@@ -130,6 +156,50 @@ const steps = [
           Siesta is a better nap, not a medical device. Detection is a
           heuristic — good enough for a nap, honest about everything else.
         </p>
+      </section>
+
+      <section class="faq" aria-labelledby="faq">
+        <h2 id="faq" class="section-label">Fair questions</h2>
+        <details>
+          <summary>How does it know I fell asleep?</summary>
+          <p>
+            While Siesta waits, your watch streams heart rate and motion. When
+            your pulse settles below its resting line and stays settled — and
+            your wrist goes still — the timer starts, credited back to the
+            moment the settling began. It's a good heuristic, not a sleep lab.
+          </p>
+        </details>
+        <details>
+          <summary>What if it can't tell?</summary>
+          <p>
+            A fail-safe wake is set the moment you arm a nap. If detection never
+            fires, you're still woken on time — the worst case is an ordinary,
+            honest nap timer. You can also start a plain timer with one tap.
+          </p>
+        </details>
+        <details>
+          <summary>Does it need my phone nearby?</summary>
+          <p>
+            No. Detection, the countdown, and the wake all run on the watch.
+            Nothing syncs; there's no account.
+          </p>
+        </details>
+        <details>
+          <summary>What about battery?</summary>
+          <p>
+            The sensor stream is the whole trick, so the goal is a 90-minute
+            nap under ~5% — measured on real hardware before we promise it,
+            not simulated.
+          </p>
+        </details>
+        <details>
+          <summary>Which watches?</summary>
+          <p>
+            Apple Watch on watchOS 11+, and Wear OS watches with a heart-rate
+            sensor. The iPhone and Android companions stay minimal — the watch
+            is the product.
+          </p>
+        </details>
       </section>
 
       <section class="price" id="price">
@@ -186,7 +256,7 @@ const steps = [
     grid-template-columns: 1.15fr 0.85fr;
     gap: clamp(2rem, 6vw, 5rem);
     align-items: center;
-    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(4rem, 9vw, 8rem);
+    padding: clamp(1.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(2.5rem, 6vw, 5rem);
     max-width: 72rem;
     margin-inline: auto;
   }
@@ -236,6 +306,15 @@ const steps = [
   .platforms {
     font-size: 0.85rem;
     color: var(--text-tertiary);
+  }
+  .store-pill {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--text-tertiary) 35%, transparent);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
   }
 
   .steps {
@@ -301,6 +380,50 @@ const steps = [
     color: var(--text-tertiary);
     font-size: 0.9rem;
     margin-top: 1.8rem;
+  }
+
+  .faq {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 5vw, 3rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 8vw, 6rem);
+  }
+  .faq details {
+    border-bottom: 1px solid color-mix(in srgb, var(--text-tertiary) 18%, transparent);
+    padding: 1.05rem 0;
+  }
+  .faq details:first-of-type {
+    border-top: 1px solid color-mix(in srgb, var(--text-tertiary) 18%, transparent);
+  }
+  .faq summary {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 60;
+    font-weight: 520;
+    font-size: 1.15rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: "+";
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--accent);
+    transition: transform 0.25s ease;
+    flex: none;
+  }
+  .faq details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq details p {
+    margin-top: 0.7rem;
+    color: var(--text-secondary);
+    font-size: 0.98rem;
   }
 
   .price {
