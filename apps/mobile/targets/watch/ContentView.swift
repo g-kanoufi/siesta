@@ -24,14 +24,16 @@ struct ContentView: View {
     private static let presets = napDurationPresets
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { _ in
-            content
-                .onAppear { viewModel.tick() }
-                .onChange(of: Date()) { viewModel.tick() }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(duskSky.ignoresSafeArea())
-        .tint(.siestaAccent)
+        content
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(duskSky.ignoresSafeArea())
+            .tint(.siestaAccent)
+            .task {
+                while !Task.isCancelled {
+                    viewModel.tick()
+                    try? await Task.sleep(nanoseconds: 1_000_000_000)
+                }
+            }
     }
 
     @ViewBuilder

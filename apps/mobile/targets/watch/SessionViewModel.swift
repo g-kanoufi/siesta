@@ -73,10 +73,10 @@ final class SessionViewModel: ObservableObject {
         if state == .idle { ProbeLog.shared.flush() }
     }
 
-    /// Called by the 1 Hz TimelineView — deadlines are timestamp-derived,
-    /// so this only re-reads the clock.
+    /// Deadlines are timestamp-derived, so this only re-reads the clock.
     func tick() {
-        manager?.tick()
+        guard let manager else { return }
+        manager.tick()
         refresh()
     }
 
