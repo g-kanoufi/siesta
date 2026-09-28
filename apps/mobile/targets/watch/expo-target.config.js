@@ -3,6 +3,7 @@ module.exports = (config) => ({
   type: "watch",
   name: "SiestaWatch",
   displayName: "Siesta",
+  icon: "../../assets/watch-icon.png",
   bundleIdentifier: ".watch",
   deploymentTarget: "11.0",
   frameworks: ["HealthKit", "WatchKit"],

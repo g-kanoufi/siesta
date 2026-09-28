@@ -37,19 +37,37 @@ export const light: ColorScheme = {
 };
 
 export const dark: ColorScheme = {
-  background: "#161310",
-  surface: "#201B16",
-  surfaceElevated: "#2B241C",
-  textPrimary: "#F3EDE3",
-  textSecondary: "#B3A894",
-  textTertiary: "#7F7666",
-  accent: "#E8A15C",
-  onAccent: "#2A1C0D",
-  accentSoft: "#3B2E1E",
-  success: "#9DBE95",
-  warning: "#E3C983",
-  danger: "#DE8A76",
-  scrim: "#0E0C0A",
+  background: "#1C1522",
+  surface: "#261C30",
+  surfaceElevated: "#332542",
+  textPrimary: "#FBF2E4",
+  textSecondary: "#D3BFB2",
+  textTertiary: "#A08FA8",
+  accent: "#F5A36E",
+  onAccent: "#301A20",
+  accentSoft: "#40283E",
+  success: "#A8C68F",
+  warning: "#F0C97B",
+  danger: "#EE8B73",
+  scrim: "#130E1A",
 };
+
+/**
+ * The sunset sky — Siesta's signature gradient, golden hour sliding into
+ * dusk. Flat fills above; these are only ever used as gradient stops
+ * (watch faces, the site sky, the app icon), never as solid UI color.
+ */
+export const sunset = {
+  /** Highest point of the sky — first to fade. */
+  zenith: "#2E1F3E",
+  /** Rose band where dusk meets gold. */
+  rose: "#B85C7A",
+  /** Coral mid-band — the warm heart of the gradient. */
+  coral: "#F27B5E",
+  /** The sun itself — deepest gold, sits lowest on the horizon. */
+  ember: "#FFC478",
+  /** Where the light dies into the plum base. */
+  horizon: "#4A2C4E",
+} as const;
 
 export const colors = { light, dark } as const;

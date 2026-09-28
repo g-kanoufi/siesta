@@ -17,7 +17,7 @@
     "android": {
       "package": "app.siesta",
       "adaptiveIcon": {
-        "backgroundColor": "#161310",
+        "backgroundColor": "#FF7650",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

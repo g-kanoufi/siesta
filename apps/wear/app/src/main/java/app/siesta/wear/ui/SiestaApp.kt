@@ -5,8 +5,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -39,19 +42,27 @@ import app.siesta.wear.SessionViewModel
 import siesta.NapState
 import siesta.napDurationPresets
 
+// Dusk palette — ports of packages/design-tokens/src/colors.ts (dark) +
+// the shared sunset gradient stops.
 private val SiestaColors = Colors(
-    primary = Color(0xFFE8A15C),
-    primaryVariant = Color(0xFFE8A15C),
-    secondary = Color(0xFFB3A894),
-    background = Color(0xFF161310),
-    surface = Color(0xFF201B16),
-    onPrimary = Color(0xFF2A1C0D),
-    onSecondary = Color(0xFF161310),
-    onBackground = Color(0xFFF3EDE3),
-    onSurface = Color(0xFFF3EDE3),
-    onSurfaceVariant = Color(0xFFB3A894),
-    error = Color(0xFFDE8A76),
-    onError = Color(0xFF161310),
+    primary = Color(0xFFF5A36E),
+    primaryVariant = Color(0xFFF5A36E),
+    secondary = Color(0xFFD3BFB2),
+    background = Color(0xFF1C1522),
+    surface = Color(0xFF261C30),
+    onPrimary = Color(0xFF301A20),
+    onSecondary = Color(0xFF1C1522),
+    onBackground = Color(0xFFFBF2E4),
+    onSurface = Color(0xFFFBF2E4),
+    onSurfaceVariant = Color(0xFFD3BFB2),
+    error = Color(0xFFEE8B73),
+    onError = Color(0xFF1C1522),
+)
+
+val DuskSky = Brush.verticalGradient(
+    0f to Color(0xFF2E1F3E),      // sunset.zenith
+    0.45f to Color(0xFF1C1522),   // background
+    1f to Color(0xFF130E1A),      // scrim
 )
 
 @Composable
@@ -88,6 +99,8 @@ fun SiestaApp(viewModel: SessionViewModel) {
             }
             return@MaterialTheme
         }
+        // Dusk gradient behind everything.
+        Box(Modifier.fillMaxSize().background(DuskSky)) {
         when (view?.state ?: NapState.IDLE) {
             NapState.IDLE, NapState.SELECTING_DURATION ->
                 SelectionScreen(viewModel, selected)
@@ -124,6 +137,7 @@ fun SiestaApp(viewModel: SessionViewModel) {
             NapState.ERROR ->
                 ErrorScreen { viewModel.beginManually() }
         }
+        }
     }
 }
 
@@ -147,8 +161,7 @@ private fun SelectionScreen(viewModel: SessionViewModel, selected: Int) {
     ) {
         Hammock(
             state = NapState.IDLE,
-            accent = MaterialTheme.colors.primary,
-            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            accent = MaterialTheme.colors.onSurface,
             modifier = Modifier.size(width = 64.dp, height = 28.dp),
         )
         Text(
@@ -218,8 +231,7 @@ private fun StatusScreen(
     ) {
         Hammock(
             state = state,
-            accent = MaterialTheme.colors.primary,
-            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            accent = MaterialTheme.colors.onSurface,
             modifier = Modifier.size(width = 64.dp, height = 28.dp),
         )
         Text(
@@ -277,8 +289,7 @@ private fun OnboardingScreen(onDone: () -> Unit) {
     ) {
         Hammock(
             state = NapState.IDLE,
-            accent = MaterialTheme.colors.primary,
-            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            accent = MaterialTheme.colors.onSurface,
             modifier = Modifier.size(width = 64.dp, height = 28.dp),
         )
         Text(text = title, fontSize = 15.sp, color = MaterialTheme.colors.onBackground)
@@ -305,8 +316,7 @@ private fun SleepAccessScreen(onAllow: () -> Unit) {
     ) {
         Hammock(
             state = NapState.IDLE,
-            accent = MaterialTheme.colors.primary,
-            post = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+            accent = MaterialTheme.colors.onSurface,
             modifier = Modifier.size(width = 64.dp, height = 28.dp),
         )
         Text(

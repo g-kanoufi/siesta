@@ -3,7 +3,6 @@ import "@fontsource-variable/fraunces";
 import "@fontsource/instrument-sans";
 import "../styles/global.css";
 import { dark } from "@siesta/design-tokens";
-import HammockMark from "../components/HammockMark.astro";
 
 const cssVars = {
   "--bg": dark.background,
@@ -20,14 +19,15 @@ const cssVars = {
 };
 ---
 
-{/* Rendered only to be screenshotted into public/og.png (1200×630). */}
+{/* Rendered only to be screenshotted into public/og.png (1200×630).
+    The app mark uses Siesta's warm sunset and dark hammock silhouette. */}
 <html lang="en" style={cssVars}>
   <head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>og</title></head>
   <body>
     <main class="card">
-      <HammockMark size={120} />
+      <img class="mark" src="/favicon.svg" width="240" height="240" alt="" />
       <h1>Sleep first.<br />Count down second.</h1>
-      <p class="lede">A tiny nap timer that waits for you to fall asleep.</p>
+      <p class="lede">A nap timer that waits for you to fall asleep —<br />and wakes you on time even if it can't tell.</p>
       <p class="foot">siesta.app · €2.99 once · Apple Watch &amp; Wear OS</p>
     </main>
   </body>
@@ -35,34 +35,51 @@ const cssVars = {
 
 <style>
   .card {
+    position: relative;
     width: 1200px;
     height: 630px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    text-align: center;
+    gap: 4.5rem;
     background:
-      radial-gradient(60rem 42rem at 78% 18%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%),
+      radial-gradient(70rem 40rem at 30% -10%,
+        color-mix(in srgb, #FFC478 26%, transparent) 0%,
+        color-mix(in srgb, #F27B5E 20%, transparent) 34%,
+        color-mix(in srgb, #B85C7A 14%, transparent) 56%,
+        transparent 76%),
       var(--bg);
+  }
+  .mark {
+    flex: none;
+    border-radius: 22.5%;
   }
   h1 {
     font-family: var(--font-display);
     font-variation-settings: "SOFT" 100, "opsz" 144;
     font-weight: 480;
-    font-size: 4.6rem;
+    font-size: 4.4rem;
     line-height: 1.05;
     letter-spacing: -0.015em;
+    text-align: left;
   }
   .lede {
+    position: absolute;
+    bottom: 5.4rem;
+    left: 50%;
+    transform: translateX(-50%);
     color: var(--text-secondary);
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    text-align: center;
+    white-space: nowrap;
   }
   .foot {
     position: absolute;
-    bottom: 3rem;
-    font-size: 1rem;
+    bottom: 2.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.95rem;
     letter-spacing: 0.08em;
     color: var(--text-tertiary);
   }

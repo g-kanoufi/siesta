@@ -51,17 +51,14 @@ final class UserDefaultsSessionStore: SessionStore {
 final class NotificationAlarmScheduler: NSObject, AlarmScheduler, UNUserNotificationCenterDelegate {
     private let center = UNUserNotificationCenter.current()
 
+    /// Authorization is requested lazily at the first arm — the moment the
+    /// fail-safe wake is being scheduled, when "we'll wake you at X" makes
+    /// the prompt self-explanatory (§48). Never at launch.
+    private var didRequestAuth = false
+
     override init() {
         super.init()
         center.delegate = self
-        // A scheduled notification that cannot alert is not a wake channel —
-        // authorization is requested at scheduler construction and logged.
-        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
-            ProbeLog.shared.log("notification_auth", [
-                "granted": granted,
-                "error": error?.localizedDescription ?? "",
-            ])
-        }
         // Delivered-but-unseen notifications from a killed run still answer
         // "did the alarm fire while the app was dead?" on next launch.
         center.getDeliveredNotifications { delivered in
@@ -75,7 +72,19 @@ final class NotificationAlarmScheduler: NSObject, AlarmScheduler, UNUserNotifica
         }
     }
 
+    private func ensureAuthorization() {
+        guard !didRequestAuth else { return }
+        didRequestAuth = true
+        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+            ProbeLog.shared.log("notification_auth", [
+                "granted": granted,
+                "error": error?.localizedDescription ?? "",
+            ])
+        }
+    }
+
     func schedule(atMs: EpochMs, kind: AlarmKind, sessionId: String) {
+        ensureAuthorization()
         let content = UNMutableNotificationContent()
         content.title = "Siesta"
         // Wake is haptic by default; sound stays off (PRIVACY.md: quiet product).

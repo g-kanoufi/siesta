@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1088" height="1088" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF7650"/>
+      <stop offset="1" stop-color="#FF9A4A"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#62537B"/>
+      <stop offset="1" stop-color="#27355F"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#FFF4C7"/>
+      <stop offset="1" stop-color="#FFE7A3"/>
+    </radialGradient>
+  </defs>
+  <rect width="1088" height="1088" fill="url(#sky)"/>
+  <circle cx="512" cy="455" r="190" fill="url(#sun)"/>
+  <rect y="650" width="1024" height="374" fill="url(#water)"/>
+</svg>

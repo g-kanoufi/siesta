@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="432" viewBox="0 0 432 432">
+  <path d="M18 160 L52 188
+           C105 229 158 251 216 251
+           C274 251 327 229 380 188
+           L414 160
+           L414 174
+           L382 201
+           C329 245 277 269 216 269
+           C155 269 103 245 50 201
+           L18 174 Z"
+        fill="#000"/>
+  <circle cx="52" cy="188" r="8" fill="#000"/>
+  <circle cx="380" cy="188" r="8" fill="#000"/>
+</svg>

@@ -1,5 +1,23 @@
 import SwiftUI
 
+/// Dusk palette — ports of packages/design-tokens/src/colors.ts (dark +
+/// sunset). Flat hexes, same numbers as the Kotlin/TS tokens.
+private extension Color {
+    static let siestaAccent = Color(red: 0.961, green: 0.639, blue: 0.431) // #F5A36E
+    static let siestaCream = Color(red: 0.984, green: 0.949, blue: 0.894)  // #FBF2E4
+    static let siestaZenith = Color(red: 0.180, green: 0.122, blue: 0.243) // #2E1F3E
+    static let siestaScrim = Color(red: 0.075, green: 0.055, blue: 0.102)  // #130E1A
+    static let siestaReflection = Color(red: 1, green: 0.702, blue: 0.365) // #FFB35D
+}
+
+/// The watch's own dusk sky — zenith plum at the crown, fading to near-black
+/// at the bottom edge. Subtle; OLED-friendly.
+private let duskSky = LinearGradient(
+    colors: [.siestaZenith, .siestaScrim],
+    startPoint: .top,
+    endPoint: .bottom
+)
+
 struct ContentView: View {
     @ObservedObject var viewModel: SessionViewModel
 
@@ -11,6 +29,9 @@ struct ContentView: View {
                 .onAppear { viewModel.tick() }
                 .onChange(of: Date()) { viewModel.tick() }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(duskSky.ignoresSafeArea())
+        .tint(.siestaAccent)
     }
 
     @ViewBuilder
@@ -213,10 +234,11 @@ struct ContentView: View {
     }
 }
 
-/// The geometric hammock mark — two posts, one dip. Motion follows the
+/// The geometric hammock mark — one broad, clean lens of cloth. Same
+/// language as the app icon; no trunk, ropes or sun. Motion follows the
 /// shared design tokens (packages/design-tokens/src/motion.ts):
-/// breathe 4.2s/1.8% while waiting, sway 6.2s/1.6° while sleeping,
-/// a one-shot spring rise on wake, and a small dip on armed.
+/// breathe 4.2s/1.8% while waiting, sway 6.2s/1.6° while sleeping, a
+/// one-shot spring rise on wake, and a small dip on armed.
 /// Everything disables under Reduce Motion.
 struct HammockGlyph: View {
     let state: NapState
@@ -225,20 +247,13 @@ struct HammockGlyph: View {
     @State private var lift: CGFloat = 0
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            HStack {
-                Capsule().frame(width: 2, height: 14)
-                Spacer()
-                Capsule().frame(width: 2, height: 14)
-            }
-            .frame(width: 74)
-            .foregroundStyle(.secondary)
-
-            ArcShape()
-                .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-                .frame(width: 64, height: 18)
+        ZStack {
+            ReflectionShape()
+                .fill(Color.siestaReflection.opacity(0.78))
+            LensShape()
+                .fill(Color.siestaCream)
         }
-        .frame(height: 30)
+        .frame(width: 70, height: 32)
         .offset(y: lift)
         .scaleEffect(state == .waitingForSleep || state == .armed ? 1.018 : 1)
         .rotationEffect(.degrees(state == .sleeping ? 1.6 : 0), anchor: .center)
@@ -253,7 +268,7 @@ struct HammockGlyph: View {
         )
         .accessibilityHidden(true)
         .onAppear { updateLift(for: state) }
-        .onChange(of: state) { updateLift(for: $0) }
+        .onChange(of: state) { _, newState in updateLift(for: newState) }
     }
 
     /// Waking/completed: the hammock starts low and springs up to rest.
@@ -268,14 +283,48 @@ struct HammockGlyph: View {
     }
 }
 
-private struct ArcShape: Shape {
+/// Filled hammock cloth: a lens — deep back edge, shallower front lip.
+private struct LensShape: Shape {
     func path(in rect: CGRect) -> Path {
+        let scale = min(rect.width / 1024, rect.height / 462)
+        let left = rect.minX + (rect.width - 1024 * scale) / 2
+        let top = rect.minY + (rect.height - 462 * scale) / 2
+        func point(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+            CGPoint(x: left + x * scale, y: top + (y - 382) * scale)
+        }
+
         var p = Path()
-        p.move(to: CGPoint(x: rect.minX, y: rect.minY))
-        p.addQuadCurve(
-            to: CGPoint(x: rect.maxX, y: rect.minY),
-            control: CGPoint(x: rect.midX, y: rect.maxY * 1.9)
-        )
+        p.move(to: point(0, 382))
+        p.addLine(to: point(82, 449))
+        p.addCurve(to: point(512, 610), control1: point(210, 548), control2: point(350, 610))
+        p.addCurve(to: point(942, 449), control1: point(674, 610), control2: point(814, 548))
+        p.addLine(to: point(1024, 382))
+        p.addLine(to: point(1024, 414))
+        p.addLine(to: point(948, 476))
+        p.addCurve(to: point(512, 650), control1: point(821, 582), control2: point(680, 650))
+        p.addCurve(to: point(76, 476), control1: point(344, 650), control2: point(203, 582))
+        p.addLine(to: point(0, 414))
+        p.closeSubpath()
+        p.addEllipse(in: CGRect(x: point(64, 431).x, y: point(64, 431).y, width: 36 * scale, height: 36 * scale))
+        p.addEllipse(in: CGRect(x: point(924, 431).x, y: point(924, 431).y, width: 36 * scale, height: 36 * scale))
+        return p
+    }
+}
+
+private struct ReflectionShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        let scale = min(rect.width / 1024, rect.height / 462)
+        let left = rect.minX + (rect.width - 1024 * scale) / 2
+        let top = rect.minY + (rect.height - 462 * scale) / 2
+        var p = Path()
+        for (centerY, radiusX, radiusY) in [(CGFloat(715), CGFloat(155), CGFloat(13)), (760, 105, 10), (801, 62, 8), (838, 30, 6)] {
+            p.addEllipse(in: CGRect(
+                x: left + (512 - radiusX) * scale,
+                y: top + (centerY - radiusY - 382) * scale,
+                width: radiusX * 2 * scale,
+                height: radiusY * 2 * scale
+            ))
+        }
         return p
     }
 }

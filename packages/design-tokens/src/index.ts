@@ -1,4 +1,4 @@
-export { colors, dark, light } from "./colors";
+export { colors, dark, light, sunset } from "./colors";
 export type { ColorScheme } from "./colors";
 export { typography } from "./typography";
 export type { TypeRole, TypeStyle } from "./typography";

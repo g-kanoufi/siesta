@@ -23,6 +23,7 @@ final class ProbeLog {
     var sessionId: String?
 
     private init() {
+#if DEBUG
         // App container Documents — pulled off-device via Xcode ▸ Devices ▸
         // Download Container (group containers don't ride along).
         fileURL = FileManager.default
@@ -34,9 +35,11 @@ final class ProbeLog {
            size > 4_000_000 {
             try? FileManager.default.removeItem(at: url)
         }
+#endif
     }
 
     func log(_ event: String, _ fields: [String: Any] = [:]) {
+#if DEBUG
         var obj: [String: Any] = [
             "t": Int64(Date().timeIntervalSince1970 * 1000),
             "app": "watchos",
@@ -52,9 +55,11 @@ final class ProbeLog {
         let count = buffer.count
         lock.unlock()
         if count >= 32 { flush() }
+#endif
     }
 
     func flush() {
+#if DEBUG
         lock.lock()
         let lines = buffer
         buffer.removeAll()
@@ -70,20 +75,29 @@ final class ProbeLog {
             handle.write(Data(text.utf8))
             try? handle.close()
         }
+#endif
     }
 
     func tail(_ n: Int = 80) -> [String] {
+#if DEBUG
         flush()
         guard let url = fileURL,
               let text = try? String(contentsOf: url, encoding: .utf8) else { return [] }
         return Array(text.split(separator: "\n").map(String.init).suffix(n))
+#else
+        return []
+#endif
     }
 
     var fileSizeBytes: Int {
+#if DEBUG
         flush()
         guard let url = fileURL else { return 0 }
         return (try? FileManager.default
             .attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+#else
+        return 0
+#endif
     }
 }
 

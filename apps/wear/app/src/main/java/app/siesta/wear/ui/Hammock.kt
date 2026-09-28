@@ -15,12 +15,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
@@ -38,12 +36,12 @@ private const val RISE_PX = 14f
 private const val RISE_STIFFNESS = 90f
 private const val RISE_DAMPING = 0.632f // 12 / (2*sqrt(90*1))
 
-/** The geometric hammock mark — two posts, one dip. Same mark everywhere. */
+/** The geometric hammock mark — one broad, clean lens of cloth. No trunk,
+ *  ropes or sun. */
 @Composable
 fun Hammock(
     state: NapState,
     accent: Color,
-    post: Color,
     modifier: Modifier = Modifier,
 ) {
     // Android's closest public "reduce motion" signal: animator scale 0.
@@ -108,25 +106,71 @@ fun Hammock(
         translate(top = -lift.value) {
             scale(breathe, pivot = Offset(w / 2f, h / 2f)) {
                 rotate(degrees = rotation, pivot = Offset(w / 2f, 0f)) {
-                    val postW = w * 0.045f
-                    val postH = h * 0.55f
-                    drawRoundRect(
-                        color = post,
-                        topLeft = Offset(0f, h * 0.05f),
-                        size = Size(postW, postH),
-                        cornerRadius = CornerRadius(postW / 2),
-                    )
-                    drawRoundRect(
-                        color = post,
-                        topLeft = Offset(w - postW, h * 0.05f),
-                        size = Size(postW, postH),
-                        cornerRadius = CornerRadius(postW / 2),
-                    )
-                    val path = Path().apply {
-                        moveTo(postW / 2, h * 0.12f)
-                        quadraticBezierTo(w / 2f, h * 1.15f, w - postW / 2, h * 0.12f)
+                    val logoScale = minOf(w / 1024f, h / 462f)
+                    val logoLeft = (w - 1024f * logoScale) / 2f
+                    val logoTop = (h - 462f * logoScale) / 2f
+                    fun point(x: Float, y: Float) =
+                        Offset(logoLeft + x * logoScale, logoTop + (y - 382f) * logoScale)
+
+                    val reflections = Path().apply {
+                        for ((centerY, radiusX, radiusY) in listOf(
+                            Triple(715f, 155f, 13f),
+                            Triple(760f, 105f, 10f),
+                            Triple(801f, 62f, 8f),
+                            Triple(838f, 30f, 6f),
+                        )) {
+                            val center = point(512f, centerY)
+                            val radius = Offset(radiusX * logoScale, radiusY * logoScale)
+                            addOval(Rect(
+                                center.x - radius.x,
+                                center.y - radius.y,
+                                center.x + radius.x,
+                                center.y + radius.y,
+                            ))
+                        }
                     }
-                    drawPath(path, color = accent, style = Stroke(width = w * 0.05f))
+                    drawPath(reflections, color = Color(0xFFFFB35D).copy(alpha = 0.78f))
+
+                    val hammock = Path().apply {
+                        moveTo(point(0f, 382f).x, point(0f, 382f).y)
+                        lineTo(point(82f, 449f).x, point(82f, 449f).y)
+                        cubicTo(
+                            point(210f, 548f).x, point(210f, 548f).y,
+                            point(350f, 610f).x, point(350f, 610f).y,
+                            point(512f, 610f).x, point(512f, 610f).y,
+                        )
+                        cubicTo(
+                            point(674f, 610f).x, point(674f, 610f).y,
+                            point(814f, 548f).x, point(814f, 548f).y,
+                            point(942f, 449f).x, point(942f, 449f).y,
+                        )
+                        lineTo(point(1024f, 382f).x, point(1024f, 382f).y)
+                        lineTo(point(1024f, 414f).x, point(1024f, 414f).y)
+                        lineTo(point(948f, 476f).x, point(948f, 476f).y)
+                        cubicTo(
+                            point(821f, 582f).x, point(821f, 582f).y,
+                            point(680f, 650f).x, point(680f, 650f).y,
+                            point(512f, 650f).x, point(512f, 650f).y,
+                        )
+                        cubicTo(
+                            point(344f, 650f).x, point(344f, 650f).y,
+                            point(203f, 582f).x, point(203f, 582f).y,
+                            point(76f, 476f).x, point(76f, 476f).y,
+                        )
+                        lineTo(point(0f, 414f).x, point(0f, 414f).y)
+                        close()
+                        for ((x, y) in listOf(82f to 449f, 942f to 449f)) {
+                            val center = point(x, y)
+                            val radius = 18f * logoScale
+                            addOval(Rect(
+                                center.x - radius,
+                                center.y - radius,
+                                center.x + radius,
+                                center.y + radius,
+                            ))
+                        }
+                    }
+                    drawPath(hammock, color = accent)
                 }
             }
         }

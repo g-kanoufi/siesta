@@ -9,20 +9,23 @@ const { size = 40, animated = false } = Astro.props;
 <svg
   class:list={["hammock", { sway: animated }]}
   width={size}
-  height={size * 0.56}
-  viewBox="0 0 64 36"
+  height={size * 462 / 1024}
+  viewBox="0 382 1024 462"
   fill="none"
   aria-hidden="true"
 >
-  <rect x="4" y="2" width="3" height="18" rx="1.5" fill="var(--text-tertiary)" />
-  <rect x="57" y="2" width="3" height="18" rx="1.5" fill="var(--text-tertiary)" />
+  <g fill="#FFB35D" opacity=".78">
+    <ellipse cx="512" cy="715" rx="155" ry="13" />
+    <ellipse cx="512" cy="760" rx="105" ry="10" />
+    <ellipse cx="512" cy="801" rx="62" ry="8" />
+    <ellipse cx="512" cy="838" rx="30" ry="6" />
+  </g>
   <path
-    d="M5 6 Q32 44 59 6"
-    fill="none"
-    stroke="var(--accent)"
-    stroke-width="3.5"
-    stroke-linecap="round"
+    d="M0 382 L82 449 C210 548 350 610 512 610 C674 610 814 548 942 449 L1024 382 L1024 414 L948 476 C821 582 680 650 512 650 C344 650 203 582 76 476 L0 414 Z"
+    fill="var(--text-primary)"
   />
+  <circle cx="82" cy="449" r="18" fill="var(--text-primary)" />
+  <circle cx="942" cy="449" r="18" fill="var(--text-primary)" />
 </svg>
 
 <style>
@@ -32,15 +35,6 @@ const { size = 40, animated = false } = Astro.props;
   .hammock.sway {
     animation: sway var(--sway-period) ease-in-out infinite;
     transform-origin: 50% 0%;
-  }
-  @keyframes sway {
-    0%,
-    100% {
-      transform: rotate(calc(var(--sway-deg) * -1));
-    }
-    50% {
-      transform: rotate(var(--sway-deg));
-    }
   }
   @media (prefers-reduced-motion: reduce) {
     .hammock.sway {

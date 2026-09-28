@@ -17,22 +17,4 @@
   <rect width="1024" height="1024" fill="url(#sky)"/>
   <circle cx="512" cy="455" r="190" fill="url(#sun)"/>
   <rect y="650" width="1024" height="374" fill="url(#water)"/>
-  <g fill="#FFB35D" opacity=".78">
-    <ellipse cx="512" cy="715" rx="155" ry="13"/>
-    <ellipse cx="512" cy="760" rx="105" ry="10"/>
-    <ellipse cx="512" cy="801" rx="62" ry="8"/>
-    <ellipse cx="512" cy="838" rx="30" ry="6"/>
-  </g>
-  <path d="M0 382 L82 449
-           C210 548 350 610 512 610
-           C674 610 814 548 942 449
-           L1024 382
-           L1024 414
-           L948 476
-           C821 582 680 650 512 650
-           C344 650 203 582 76 476
-           L0 414 Z"
-        fill="#17203D"/>
-  <circle cx="82" cy="449" r="18" fill="#17203D"/>
-  <circle cx="942" cy="449" r="18" fill="#17203D"/>
 </svg>
