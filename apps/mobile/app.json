@@ -11,7 +11,12 @@
       "bundleIdentifier": "app.siesta",
       "supportsTablet": false,
       "entitlements": {
-        "com.apple.security.application-groups": ["group.app.siesta"]
+        "com.apple.security.application-groups": [
+          "group.app.siesta"
+        ]
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -27,6 +32,32 @@
       "expo-router",
       "./plugins/with-domain-sync.js",
       "@bacons/apple-targets"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "app.siesta.watch",
+                  "targetName": "SiestaWatch",
+                  "entitlements": {
+                    "com.apple.developer.healthkit": true,
+                    "com.apple.developer.healthkit.access": [],
+                    "com.apple.security.application-groups": [
+                      "group.app.siesta"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "f1a7a762-da0a-4204-b513-72015350381f"
+      }
+    },
+    "owner": "guiknf-org"
   }
 }

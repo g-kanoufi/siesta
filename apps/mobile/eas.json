@@ -1,5 +1,10 @@
 {
+  "cli": {
+    "appVersionSource": "remote"
+  },
   "build": {
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   }
 }
