@@ -1,0 +1,163 @@
+---
+import "@fontsource-variable/fraunces";
+import "@fontsource/instrument-sans";
+import "../styles/global.css";
+import { ambient, brand, dark, logoSunset, sunset } from "@siesta/design-tokens";
+import HammockMark from "../components/HammockMark.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const cssVars = {
+  "--bg": dark.background,
+  "--surface": dark.surface,
+  "--surface-elevated": dark.surfaceElevated,
+  "--text-primary": dark.textPrimary,
+  "--text-secondary": dark.textSecondary,
+  "--text-tertiary": dark.textTertiary,
+  "--accent": dark.accent,
+  "--on-accent": dark.onAccent,
+  "--accent-soft": dark.accentSoft,
+  "--brand-hammock": brand.hammockNavy,
+  "--brand-hammock-shade": brand.hammockShade,
+  "--logo-dawn": logoSunset.dawn,
+  "--logo-ember": logoSunset.ember,
+  "--logo-dusk": logoSunset.dusk,
+  "--scrim": dark.scrim,
+  "--font-display": '"Fraunces Variable", Georgia, serif',
+  "--font-body": '"Instrument Sans", system-ui, sans-serif',
+  "--sway-period": `${ambient.sway.periodMs}ms`,
+  "--sway-deg": `${ambient.sway.amplitudeDegrees}deg`,
+  "--sky-zenith": sunset.zenith,
+  "--sky-rose": sunset.rose,
+  "--sky-coral": sunset.coral,
+  "--sky-ember": sunset.ember,
+  "--sky-horizon": sunset.horizon,
+};
+---
+
+<html lang="en" style={cssVars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Siesta</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content={dark.background} />
+  </head>
+  <body>
+    <header class="legal-nav">
+      <a class="legal-wordmark" href="/" aria-label="Siesta home">
+        <HammockMark size={28} />
+        <span>siesta</span>
+      </a>
+      <a class="legal-home" href="/">Back to Siesta</a>
+    </header>
+    <main class="legal-main">
+      <p class="legal-eyebrow">Siesta · Legal</p>
+      <h1>{title}</h1>
+      <p class="legal-updated">Updated 29 September 2026</p>
+      <div class="legal-copy"><slot /></div>
+    </main>
+    <footer class="legal-footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/cgv">Terms of sale (CGV)</a>
+      <a href="/">siesta.app</a>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .legal-nav {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: 1.5rem clamp(1.25rem, 5vw, 4rem);
+  }
+  .legal-wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    text-decoration: none;
+  }
+  .legal-home,
+  .legal-updated {
+    color: var(--text-tertiary);
+    font-size: 0.86rem;
+  }
+  .legal-main {
+    position: relative;
+    z-index: 1;
+    max-width: 50rem;
+    margin-inline: auto;
+    padding: clamp(2rem, 7vw, 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+  }
+  .legal-eyebrow {
+    color: var(--accent);
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin-top: 0.7rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.7rem, 7vw, 4.5rem);
+    font-weight: 480;
+    line-height: 1.05;
+  }
+  .legal-updated {
+    margin-top: 0.8rem;
+  }
+  .legal-copy {
+    margin-top: 3rem;
+    color: var(--text-secondary);
+  }
+  .legal-copy h2 {
+    margin: 2.3rem 0 0.6rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 520;
+  }
+  .legal-copy p,
+  .legal-copy li {
+    margin-top: 0.65rem;
+    line-height: 1.75;
+  }
+  .legal-copy ul {
+    padding-left: 1.3rem;
+  }
+  .legal-copy a {
+    color: var(--text-primary);
+  }
+  .draft-notice {
+    margin-top: 1.5rem;
+    padding: 1rem 1.1rem;
+    border-left: 2px solid var(--accent);
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    color: var(--text-primary);
+  }
+  .legal-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    padding: 2rem 1.25rem 3rem;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+  }
+  .legal-footer a {
+    text-decoration: none;
+  }
+</style>

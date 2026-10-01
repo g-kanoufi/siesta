@@ -12,6 +12,7 @@ public final class ManualClock: Clock {
 /// Dev/test detector. `simulateSleep` is the "Simulate sleep" dev control.
 public final class MockSleepDetectionService: SleepDetectionService {
     public private(set) var startCalls = 0
+    public private(set) var stopDetectionCalls = 0
     public private(set) var stopCalls = 0
     public private(set) var running = false
     private var failStartError: Error?
@@ -23,6 +24,10 @@ public final class MockSleepDetectionService: SleepDetectionService {
         startCalls += 1
         if let failStartError { throw failStartError }
         running = true
+    }
+
+    public func stopDetection() {
+        stopDetectionCalls += 1
     }
 
     public func stop() {

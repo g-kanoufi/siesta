@@ -1,65 +1,58 @@
 import sharp from "sharp";
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const out = (...p) => path.join(root, "apps/mobile/assets", ...p);
+const assets = (...parts) => path.join(root, "apps/mobile/assets", ...parts);
+const render = async (source, destination, size) =>
+  sharp(source).resize(size, size, { fit: "contain" }).png().toFile(destination);
 
-const BG = "#161310";
-const ACCENT = "#E8A15C";
-const POST = "#7F7666";
+mkdirSync(assets(), { recursive: true });
 
-/** The hammock mark, drawn on a 64×64 viewBox like favicon.svg. */
-const mark = (size, stroke = ACCENT, post = POST) => {
-  const s = size / 64;
-  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
-    <rect x="12" y="18" width="2.5" height="14" rx="1.25" fill="${post}"/>
-    <rect x="49.5" y="18" width="2.5" height="14" rx="1.25" fill="${post}"/>
-    <path d="M14 22 Q32 48 50 22" fill="none" stroke="${stroke}" stroke-width="3.5" stroke-linecap="round"/>
-  </svg>`);
-};
+// App and Watch icons share the OG hammock silhouette on the sunset gradient.
+await render(assets("siesta-master-1024.svg"), assets("icon.png"), 1024);
+await render(assets("siesta-master-1024.svg"), assets("watch-icon.png"), 1024);
+const generatedWatchIcon = path.join(root, "apps/mobile/targets/watch/Assets.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png");
+if (existsSync(path.dirname(generatedWatchIcon))) {
+  await render(assets("watch-icon.png"), generatedWatchIcon, 1024);
+}
 
-const centered = async ({ size, bg, markScale, markSvg, rounded }) => {
-  const markSize = Math.round(size * markScale);
-  const markPng = await sharp(markSvg).resize(markSize, markSize).png().toBuffer();
-  let base = sharp({ create: { width: size, height: size, channels: 4, background: bg } });
-  if (rounded) {
-    const r = Math.round(size * 0.22);
-    const maskSvg = Buffer.from(
-      `<svg width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${r}" fill="#fff"/></svg>`
-    );
-    base = base.composite([
-      { input: markPng, top: Math.round((size - markSize) / 2), left: Math.round((size - markSize) / 2) },
-      { input: maskSvg, blend: "dest-in" },
-    ]);
-    return base.png().toBuffer();
-  }
-  return base
-    .composite([{ input: markPng, top: Math.round((size - markSize) / 2), left: Math.round((size - markSize) / 2) }])
-    .png()
-    .toBuffer();
-};
+// Android adaptive icon layers stay separate so Android can apply its mask.
+await render(assets("android-adaptive-background.svg"), assets("android-icon-background.png"), 1024);
+await render(assets("android-adaptive-foreground.svg"), assets("android-icon-foreground.png"), 512);
+await render(assets("android-adaptive-monochrome.svg"), assets("android-icon-monochrome.png"), 512);
 
-mkdirSync(out(), { recursive: true });
+// Splash and favicon fallbacks use the same sunset artwork.
+await render(assets("siesta-master-1024.svg"), assets("splash-icon.png"), 300);
+await render(path.join(root, "apps/web/public/favicon.svg"), assets("favicon.png"), 64);
 
-// App icon — dark rounded square, hammock centered (iOS masks corners itself;
-// we still emit rounded corners so it reads correctly outside stores).
-await sharp(await centered({ size: 1024, bg: BG, markScale: 0.56, markSvg: mark(1024), rounded: true }))
-  .toFile(out("icon.png"));
-
-// Android adaptive icon — foreground is the mark alone in the safe zone.
-await sharp(mark(1024)).resize(512, 512).png().toFile(out("android-icon-foreground.png"));
-await sharp({ create: { width: 1024, height: 1024, channels: 4, background: BG } })
+const ogCard = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#765749"/>
+      <stop offset=".42" stop-color="#6B4F47"/>
+      <stop offset=".78" stop-color="#20324E"/>
+      <stop offset="1" stop-color="#20252B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="18%" cy="10%" r="85%">
+      <stop offset="0" stop-color="#F4C56C" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#F4C56C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#dusk)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="535" y="185" fill="#D69B6E" font-family="Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="5">A NAP TIMER FOR YOUR WRIST</text>
+  <text x="535" y="275" fill="#F2EEE6" font-family="Georgia, serif" font-size="72">siesta</text>
+  <text x="535" y="360" fill="#F2EEE6" font-family="Georgia, serif" font-size="56">Sleep first.</text>
+  <text x="535" y="424" fill="#F2EEE6" font-family="Georgia, serif" font-size="52">Count down second.</text>
+  <text x="535" y="490" fill="#E0D8CE" font-family="Arial, sans-serif" font-size="23">A quiet daydream or a gentle nap.</text>
+  <text x="535" y="548" fill="#B8B0A7" font-family="Arial, sans-serif" font-size="18" letter-spacing="2">APPLE WATCH  ·  IPHONE  ·  €2.99 ONCE</text>
+</svg>`);
+const ogIcon = await sharp(assets("icon.png")).resize(320, 320).png().toBuffer();
+await sharp(ogCard)
+  .composite([{ input: ogIcon, left: 130, top: 155 }])
   .png()
-  .toFile(out("android-icon-background.png"));
-await sharp(mark(1024, "#FFFFFF", "#BFB7AA")).resize(512, 512).png().toFile(out("android-icon-monochrome.png"));
+  .toFile(path.join(root, "apps/web/public/og.png"));
 
-// Splash — smaller mark on transparent; app.json renders it on the dark bg.
-await sharp(mark(1024)).resize(300, 300).png().toFile(out("splash-icon.png"));
-
-// favicon.png fallback (web uses favicon.svg)
-await sharp(await centered({ size: 64, bg: BG, markScale: 0.78, markSvg: mark(64), rounded: true }))
-  .toFile(out("favicon.png"));
-
-console.log("icons generated →", out());
+console.log("icons generated →", assets());

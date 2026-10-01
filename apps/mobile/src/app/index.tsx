@@ -1,222 +1,153 @@
 import React from "react";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { presetFor, type NapState } from "@siesta/core";
 import { colors, spacing, typography } from "@siesta/design-tokens";
-import { DurationPicker } from "../components/DurationPicker";
-import { Hammock } from "../components/Hammock";
-import { PrimaryButton } from "../components/PrimaryButton";
-import { sleepDetector, useNap } from "../siesta/session";
-
-function formatRemaining(ms: number): string {
-  const totalSeconds = Math.ceil(ms / 1000);
-  const m = Math.floor(totalSeconds / 60);
-  const s = totalSeconds % 60;
-  return `${m}:${String(s).padStart(2, "0")}`;
-}
-
-function statusCopy(state: NapState): string {
-  switch (state) {
-    case "waiting_for_sleep":
-      return "Waiting for sleep…";
-    case "sleeping":
-      return "Sleeping";
-    case "waking":
-      return "Welcome back.";
-    case "completed":
-      return "Welcome back.";
-    default:
-      return "";
-  }
-}
+import { SunsetBackdrop } from "../components/SunsetBackdrop";
+import siestaIcon from "../../assets/icon.png";
 
 export default function Home() {
-  const scheme = colors[useColorScheme() === "dark" ? "dark" : "light"];
-  const { view, manager } = useNap();
-  const [selected, setSelected] = React.useState(20);
-
-  if (!view || !manager) {
-    return <View style={[styles.root, { backgroundColor: scheme.background }]} />;
-  }
-
-  const state = view.state;
-  const settled = state === "idle" || state === "selecting_duration";
-  const inFlight =
-    state === "armed" || state === "waiting_for_sleep" || state === "sleeping";
-  const preset = presetFor(view.selectedDurationMinutes ?? selected);
+  const mode = useColorScheme() === "dark" ? "dark" : "light";
+  const scheme = colors[mode];
 
   return (
-    <SafeAreaView
-      style={[styles.root, { backgroundColor: scheme.background }]}
-      edges={["top", "bottom"]}
-    >
-      <View style={styles.hero}>
-        <Hammock state={state} scheme={scheme} />
-        {settled && (
-          <>
-            <Text
-              style={[styles.heroNumber, { color: scheme.textPrimary }]}
-              accessibilityLabel={`${selected} minutes`}
+    <SunsetBackdrop mode={mode}>
+      <SafeAreaView style={styles.root} edges={["top", "bottom"]}>
+        <View style={styles.header}>
+          <View style={styles.brand}>
+            <Image
+              source={siestaIcon}
+              style={styles.brandIcon}
+              accessibilityLabel="Siesta hammock logo"
+            />
+            <Text style={[styles.wordmark, { color: scheme.textPrimary }]}>siesta</Text>
+          </View>
+          <Link href="/settings" asChild>
+            <Pressable
+              accessibilityRole="button"
+              style={StyleSheet.flatten([
+                styles.settingsButton,
+                { backgroundColor: scheme.surface, borderColor: scheme.surfaceElevated },
+              ])}
             >
-              {selected}
-              <Text style={styles.heroUnit}> min</Text>
+              <Text style={[styles.settingsText, { color: scheme.textSecondary }]}>Settings</Text>
+            </Pressable>
+          </Link>
+        </View>
+
+        <ScrollView contentContainerStyle={styles.content}>
+          <Text style={[styles.eyebrow, { color: scheme.accent }]}>A NAP TIMER FOR YOUR WRIST</Text>
+          <Text style={[styles.title, { color: scheme.textPrimary }]}>Sleep first.{"\n"}Count down second.</Text>
+          <Text style={[styles.lede, { color: scheme.textSecondary }]}>
+            Choose a duration for a nap or quiet pause. Siesta uses heart-rate trends to estimate when sleep may begin, then starts counting.
+          </Text>
+
+          <View
+            style={[
+              styles.stepsCard,
+              {
+                backgroundColor: scheme.surface,
+                borderColor: scheme.surfaceElevated,
+                shadowColor: mode === "dark" ? "#000000" : "#593B33",
+                shadowOpacity: mode === "dark" ? 0.18 : 0.08,
+              },
+            ]}
+          >
+            <Step number="01" title="Choose" detail="Set your usual duration in Settings; it carries over to Apple Watch." scheme={scheme} />
+            <Step number="02" title="Settle" detail="Daydream, rest, or drift off. Your watch estimates sleep onset from heart-rate trends." scheme={scheme} />
+            <Step number="03" title="Wake" detail="A fail-safe wake is set when you start." scheme={scheme} />
+          </View>
+
+          <View style={styles.notes}>
+            <Text style={[styles.privacy, { color: scheme.textTertiary }]}>
+              At first start, Apple Health asks permission to share heart-rate data. Siesta only reads it to estimate sleep onset and never writes health data.
             </Text>
-            <Text style={[styles.supporting, { color: scheme.textSecondary }]}>
-              {preset?.description ?? "Your nap"}
+            <Text style={[styles.privacy, { color: scheme.textTertiary }]}>
+              Only heart-rate data is read on your watch and discarded after the session. A very still daydream or meditation can resemble sleep and start the countdown early. No account, ads, analytics, or backend; sleep detection is an estimate, not a medical measurement.
             </Text>
-          </>
-        )}
-        {inFlight && (
-          <>
-            <Text
-              style={[styles.status, { color: scheme.textSecondary }]}
-              accessibilityLiveRegion="polite"
-            >
-              {statusCopy(state)}
-            </Text>
-            {state === "sleeping" && view.remainingMs !== null && (
-              <Text
-                style={[styles.heroNumber, { color: scheme.textPrimary }]}
-                accessibilityLabel={`${Math.ceil(view.remainingMs / 60000)} minutes remaining`}
-              >
-                {formatRemaining(view.remainingMs)}
-              </Text>
-            )}
-            {state === "waiting_for_sleep" && view.nextDeadlineMs !== null && (
-              <Text style={[styles.supporting, { color: scheme.textTertiary }]}>
-                We&apos;ll wake you by{" "}
-                {new Date(view.nextDeadlineMs).toLocaleTimeString([], {
-                  hour: "numeric",
-                  minute: "2-digit",
-                })}{" "}
-                at the latest.
-              </Text>
-            )}
-          </>
-        )}
+          </View>
+
+          <Text style={[styles.watchNote, { color: scheme.textSecondary }]}>
+            Start and manage your siesta from the Apple Watch app or its watch-face complication.
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    </SunsetBackdrop>
+  );
+}
+
+function Step({
+  number,
+  title,
+  detail,
+  scheme,
+}: {
+  number: string;
+  title: string;
+  detail: string;
+  scheme: (typeof colors)["light"];
+}) {
+  return (
+    <View style={styles.step}>
+      <Text style={[styles.stepNumber, { color: scheme.accent }]}>{number}</Text>
+      <View style={styles.stepCopy}>
+        <Text style={[styles.stepTitle, { color: scheme.textPrimary }]}>{title}</Text>
+        <Text style={[styles.stepDetail, { color: scheme.textSecondary }]}>{detail}</Text>
       </View>
-
-      <View style={styles.controls}>
-        {settled && (
-          <>
-            <DurationPicker
-              scheme={scheme}
-              selectedMinutes={selected}
-              onSelect={(m) => {
-                setSelected(m);
-                manager.selectDuration(m);
-              }}
-            />
-            <PrimaryButton
-              scheme={scheme}
-              label="Start siesta"
-              accessibilityHint="Arms sleep detection; the countdown begins when you fall asleep"
-              onPress={() => {
-                manager.selectDuration(selected);
-                void manager.start();
-              }}
-            />
-          </>
-        )}
-
-        {inFlight && (
-          <>
-            <PrimaryButton
-              scheme={scheme}
-              label="Cancel"
-              variant="quiet"
-              onPress={() => void manager.cancel()}
-            />
-            {__DEV__ && state === "waiting_for_sleep" && (
-              <PrimaryButton
-                scheme={scheme}
-                label="Simulate sleep (dev)"
-                variant="quiet"
-                onPress={() => sleepDetector.simulateSleep(Date.now())}
-              />
-            )}
-          </>
-        )}
-
-        {(state === "waking" || state === "completed") && (
-          <PrimaryButton
-            scheme={scheme}
-            label={state === "waking" ? "I'm awake" : "Done"}
-            onPress={() => {
-              if (state === "waking") manager.acknowledgeWake();
-              void manager.dismiss();
-            }}
-          />
-        )}
-
-        {state === "cancelled" && (
-          <PrimaryButton
-            scheme={scheme}
-            label="Done"
-            onPress={() => void manager.dismiss()}
-          />
-        )}
-
-        {state === "error" && (
-          <>
-            <Text style={[styles.supporting, { color: scheme.textSecondary }]}>
-              We couldn&apos;t access sleep data. You can still start a plain
-              timer.
-            </Text>
-            <PrimaryButton
-              scheme={scheme}
-              label="Start without detection"
-              onPress={() => {
-                void manager.dismiss().then(() => {
-                  manager.selectDuration(selected);
-                  void manager.startManually();
-                });
-              }}
-            />
-            <PrimaryButton
-              scheme={scheme}
-              label="Try again"
-              variant="quiet"
-              onPress={() => void manager.dismiss()}
-            />
-          </>
-        )}
-      </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
+  root: { flex: 1 },
+  header: {
+    minHeight: 68,
+    paddingHorizontal: spacing.xl,
+    flexDirection: "row",
     justifyContent: "space-between",
-  },
-  hero: {
-    flex: 1,
     alignItems: "center",
+  },
+  brand: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+  brandIcon: { width: 40, height: 40, borderRadius: 12 },
+  wordmark: { fontSize: typography.title.size, fontWeight: "600", letterSpacing: -0.5 },
+  settingsButton: {
+    minHeight: 44,
     justifyContent: "center",
-    gap: spacing.md,
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: spacing.md,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  heroNumber: {
-    fontSize: typography.heroNumber.size,
+  settingsText: { fontSize: typography.supporting.size, fontWeight: "500" },
+  content: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.lg,
+    gap: spacing.lg,
+  },
+  eyebrow: { fontSize: typography.caption.size, letterSpacing: 2, fontWeight: "600" },
+  title: {
+    fontSize: typography.title.size * 1.45,
     fontWeight: "600",
-    fontVariant: ["tabular-nums"],
+    lineHeight: typography.title.size * 1.56,
+    letterSpacing: -1.2,
   },
-  heroUnit: {
-    fontSize: typography.heroUnit.size,
-    fontWeight: "500",
-  },
-  status: {
-    fontSize: typography.body.size,
-  },
-  supporting: {
-    fontSize: typography.supporting.size,
-    textAlign: "center",
-  },
-  controls: {
+  lede: { fontSize: typography.body.size, lineHeight: typography.body.size * 1.5 },
+  stepsCard: {
+    borderRadius: 28,
+    borderWidth: 1,
+    padding: spacing.lg,
     gap: spacing.md,
-    paddingHorizontal: spacing.xl,
-    paddingBottom: spacing.lg,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 20,
+    elevation: 2,
   },
+  step: { flexDirection: "row", gap: spacing.md, alignItems: "flex-start" },
+  stepNumber: { fontSize: typography.supporting.size, fontWeight: "600", paddingTop: 2 },
+  stepCopy: { flex: 1, gap: spacing.xxs },
+  stepTitle: { fontSize: typography.supporting.size, fontWeight: "600" },
+  stepDetail: { fontSize: typography.supporting.size, lineHeight: typography.supporting.size * 1.4 },
+  notes: { gap: spacing.sm },
+  privacy: { fontSize: typography.caption.size, lineHeight: typography.caption.size * 1.45 },
+  watchNote: { fontSize: typography.supporting.size, fontWeight: "500", lineHeight: typography.supporting.size * 1.4 },
 });

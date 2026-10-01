@@ -21,35 +21,35 @@ export interface ColorScheme {
 }
 
 export const light: ColorScheme = {
-  background: "#FAF6EF",
-  surface: "#FFFDF8",
-  surfaceElevated: "#F1EAE0",
-  textPrimary: "#231E16",
-  textSecondary: "#6B6252",
-  textTertiary: "#8F8571",
-  accent: "#BF7433",
-  onAccent: "#26180A",
-  accentSoft: "#F0DEC9",
-  success: "#5F7F57",
-  warning: "#9A7A2E",
-  danger: "#A8503F",
-  scrim: "#EDE5D7",
+  background: "#F4F0E8",
+  surface: "#FBF8F1",
+  surfaceElevated: "#ECE3D6",
+  textPrimary: "#322B25",
+  textSecondary: "#574B41",
+  textTertiary: "#5B5148",
+  accent: "#A8623F",
+  onAccent: "#FFFFFF",
+  accentSoft: "#EED9C4",
+  success: "#54745A",
+  warning: "#8C652E",
+  danger: "#A84940",
+  scrim: "#E7DDCF",
 };
 
 export const dark: ColorScheme = {
-  background: "#1C1522",
-  surface: "#261C30",
-  surfaceElevated: "#332542",
-  textPrimary: "#FBF2E4",
-  textSecondary: "#D3BFB2",
-  textTertiary: "#A08FA8",
-  accent: "#F5A36E",
-  onAccent: "#301A20",
-  accentSoft: "#40283E",
-  success: "#A8C68F",
-  warning: "#F0C97B",
-  danger: "#EE8B73",
-  scrim: "#130E1A",
+  background: "#20252B",
+  surface: "#2B3036",
+  surfaceElevated: "#3A4046",
+  textPrimary: "#F2EEE6",
+  textSecondary: "#E0D8CE",
+  textTertiary: "#B8B0A7",
+  accent: "#D69B6E",
+  onAccent: "#2D231D",
+  accentSoft: "#493D36",
+  success: "#B0CF9F",
+  warning: "#F1C67A",
+  danger: "#F3A094",
+  scrim: "#1B1F24",
 };
 
 /**
@@ -59,15 +59,39 @@ export const dark: ColorScheme = {
  */
 export const sunset = {
   /** Highest point of the sky — first to fade. */
-  zenith: "#2E1F3E",
-  /** Rose band where dusk meets gold. */
-  rose: "#B85C7A",
+  zenith: "#20324E",
+  /** Deep navy band that echoes the hammock mark. */
+  rose: "#20324E",
   /** Coral mid-band — the warm heart of the gradient. */
-  coral: "#F27B5E",
-  /** The sun itself — deepest gold, sits lowest on the horizon. */
-  ember: "#FFC478",
-  /** Where the light dies into the plum base. */
-  horizon: "#4A2C4E",
+  coral: "#6B4F47",
+  /** The warmest glow before the sky fades into plum. */
+  ember: "#765749",
+  /** Where the light dies into the charcoal base. */
+  horizon: "#20252B",
+} as const;
+
+export const sunsetLight = {
+  zenith: "#A6B8D2",
+  rose: "#BBC9DC",
+  coral: "#E3C39E",
+  ember: "#F2D6B6",
+  horizon: "#F4F0E8",
+} as const;
+
+export const logoSunset = {
+  dawn: "#F4C56C",
+  ember: "#E88758",
+  dusk: "#687F9A",
+} as const;
+
+export const sunsetGradient = {
+  light: [sunsetLight.ember, sunsetLight.coral, sunsetLight.rose, light.background],
+  dark: [sunset.ember, sunset.coral, sunset.rose, dark.background],
 } as const;
 
 export const colors = { light, dark } as const;
+
+export const brand = {
+  hammockNavy: "#20324E",
+  hammockShade: "#101E36",
+} as const;

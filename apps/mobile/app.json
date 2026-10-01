@@ -22,7 +22,7 @@
     "android": {
       "package": "app.siesta",
       "adaptiveIcon": {
-        "backgroundColor": "#FF7650",
+        "backgroundColor": "#F4C56C",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -50,6 +50,10 @@
                       "group.app.siesta"
                     ]
                   }
+                },
+                {
+                  "bundleIdentifier": "app.siesta.watch.widget",
+                  "targetName": "SiestaComplication"
                 }
               ]
             }

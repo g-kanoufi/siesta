@@ -34,10 +34,9 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* The sunset sky: a band of ember → coral → rose that melts into the plum
-   base, plus a low warm glow where the sun has just gone down. The whole
-   field drifts almost imperceptibly — 36s, a few rem — like light changing
-   while you're not watching. */
+/* The sunset sky: ember and coral fade into the hammock's navy, then the
+   charcoal base. A low warm glow softens the lower edge; the whole field
+   drifts almost imperceptibly — 36s, a few rem — like light changing unseen. */
 body::after {
   content: "";
   position: fixed;
@@ -53,7 +52,12 @@ body::after {
     radial-gradient(50rem 22rem at 88% 30rem,
       color-mix(in srgb, var(--sky-rose) 16%, transparent), transparent 70%),
     radial-gradient(46rem 24rem at 6% 44rem,
-      color-mix(in srgb, var(--sky-horizon) 60%, transparent), transparent 72%);
+      color-mix(in srgb, var(--sky-horizon) 60%, transparent), transparent 72%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--sky-zenith) 72%, var(--bg)) 0%,
+      color-mix(in srgb, var(--sky-rose) 28%, var(--bg)) 42%,
+      color-mix(in srgb, var(--sky-coral) 15%, var(--bg)) 72%,
+      var(--bg) 100%);
   animation: skydrift 36s ease-in-out infinite alternate;
 }
 

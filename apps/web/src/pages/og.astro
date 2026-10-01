@@ -2,7 +2,7 @@
 import "@fontsource-variable/fraunces";
 import "@fontsource/instrument-sans";
 import "../styles/global.css";
-import { dark } from "@siesta/design-tokens";
+import { brand, dark, sunset } from "@siesta/design-tokens";
 
 const cssVars = {
   "--bg": dark.background,
@@ -14,6 +14,14 @@ const cssVars = {
   "--accent": dark.accent,
   "--on-accent": dark.onAccent,
   "--accent-soft": dark.accentSoft,
+  "--brand-hammock": brand.hammockNavy,
+  "--brand-hammock-shade": brand.hammockShade,
+  "--scrim": dark.scrim,
+  "--sky-zenith": sunset.zenith,
+  "--sky-rose": sunset.rose,
+  "--sky-coral": sunset.coral,
+  "--sky-ember": sunset.ember,
+  "--sky-horizon": sunset.horizon,
   "--font-display": '"Fraunces Variable", Georgia, serif',
   "--font-body": '"Instrument Sans", system-ui, sans-serif',
 };
@@ -27,8 +35,8 @@ const cssVars = {
     <main class="card">
       <img class="mark" src="/favicon.svg" width="240" height="240" alt="" />
       <h1>Sleep first.<br />Count down second.</h1>
-      <p class="lede">A nap timer that waits for you to fall asleep —<br />and wakes you on time even if it can't tell.</p>
-      <p class="foot">siesta.app · €2.99 once · Apple Watch &amp; Wear OS</p>
+      <p class="lede">A quiet daydream or a gentle nap —<br />your Watch estimates when sleep may begin.</p>
+      <p class="foot">siesta.app · €2.99 once · Apple Watch &amp; iPhone</p>
     </main>
   </body>
 </html>
@@ -45,11 +53,11 @@ const cssVars = {
     gap: 4.5rem;
     background:
       radial-gradient(70rem 40rem at 30% -10%,
-        color-mix(in srgb, #FFC478 26%, transparent) 0%,
-        color-mix(in srgb, #F27B5E 20%, transparent) 34%,
-        color-mix(in srgb, #B85C7A 14%, transparent) 56%,
+        color-mix(in srgb, var(--sky-ember) 26%, transparent) 0%,
+        color-mix(in srgb, var(--sky-coral) 20%, transparent) 34%,
+        color-mix(in srgb, var(--sky-rose) 14%, transparent) 56%,
         transparent 76%),
-      var(--bg);
+      linear-gradient(145deg, var(--sky-zenith), var(--sky-horizon) 72%);
   }
   .mark {
     flex: none;

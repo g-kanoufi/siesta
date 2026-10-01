@@ -256,17 +256,27 @@ final class WatchHaptics: HapticService {
 
     func playWake(_ pattern: WakePattern) {
         task?.cancel()
-        ProbeLog.shared.log("haptic_start", [
+        var start: [String: Any] = [
             "steps": pattern.steps.count,
             "repeatIntervalMs": pattern.repeatIntervalMs,
-        ])
+        ]
+        start.merge(ProbeEnv.capture()) { _, new in new }
+        ProbeLog.shared.log("haptic_start", start)
         let intervalMs = pattern.repeatIntervalMs
-        task = Task {
+        task = Task { @MainActor in
+            var loggedFirstPulse = false
             while !Task.isCancelled {
                 for step in pattern.steps {
                     if Task.isCancelled { return }
                     switch step {
                     case let .pulse(intensity, durationMs):
+                        if !loggedFirstPulse {
+                            ProbeLog.shared.log("haptic_pulse_attempt", [
+                                "intensity": intensity,
+                                "appState": WKApplication.shared().applicationState.rawValue,
+                            ])
+                            loggedFirstPulse = true
+                        }
                         WKInterfaceDevice.current().play(Self.type(for: intensity))
                         await Self.sleep(durationMs)
                     case let .pause(durationMs):
@@ -284,6 +294,16 @@ final class WatchHaptics: HapticService {
         task?.cancel()
         task = nil
     }
+
+    #if DEBUG
+    func playTestOnce() {
+        Task { @MainActor in
+            ProbeLog.shared.log("haptic_test_once", ProbeEnv.capture())
+            WKInterfaceDevice.current().play(.notification)
+            ProbeLog.shared.flush()
+        }
+    }
+    #endif
 
     private static func type(for intensity: Double) -> WKHapticType {
         switch intensity {
@@ -413,14 +433,30 @@ final class HealthKitSleepDetector: NSObject, SleepDetectionService, HKWorkoutSe
         listeners.values.forEach { $0(atMs) }
     }
 
+    func stopDetection() {
+        var details: [String: Any] = [
+            "mode": "workout",
+            "workoutHeldForWake": workout != nil,
+            "workoutState": workout?.state.rawValue ?? -1,
+        ]
+        details.merge(ProbeEnv.capture()) { _, new in new }
+        ProbeLog.shared.log("detector_sampling_stop", details)
+        stopSampling()
+    }
+
     func stop() {
         ProbeLog.shared.log("detector_stop", ["mode": "workout"])
-        stream?.stop()
-        stream = nil
+        stopSampling()
         workout?.end()
         workout = nil
-        detector.reset()
+        ProbeLog.shared.log("workout_ended", ["mode": "workout"])
         ProbeLog.shared.flush()
+    }
+
+    private func stopSampling() {
+        stream?.stop()
+        stream = nil
+        detector.reset()
     }
 
     func onSleepDetected(_ callback: @escaping (EpochMs) -> Void) -> () -> Void {

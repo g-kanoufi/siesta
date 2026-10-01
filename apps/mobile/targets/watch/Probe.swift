@@ -169,6 +169,11 @@ struct ProbeDebugView: View {
                 Toggle("ERS alarm", isOn: $ersAlarm)
                     .font(.footnote)
                     .onChange(of: ersAlarm) { ProbeConfig.setErsAlarm(ersAlarm) }
+                Button("Test haptic once") { WatchHaptics().playTestOnce() }
+                    .font(.footnote)
+                Text("One pulse; no nap or alarm is scheduled.")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
                 Text("log \(fileSize / 1024) KB")
                     .font(.footnote)
                     .foregroundStyle(.secondary)

@@ -18,9 +18,16 @@ public struct SystemClock: Clock {
 /// session manager fully deterministic — critical for replaying vectors.
 public protocol SleepDetectionService {
     func start() async throws
+    func stopDetection()
     func stop()
     /// Returns an unsubscribe closure.
     func onSleepDetected(_ callback: @escaping (EpochMs) -> Void) -> () -> Void
+}
+
+public extension SleepDetectionService {
+    func stopDetection() {
+        stop()
+    }
 }
 
 public enum AlarmKind: String, Codable {

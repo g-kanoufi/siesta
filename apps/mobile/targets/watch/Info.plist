@@ -4,6 +4,17 @@
 <dict>
 	<key>WKApplication</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>app.siesta.watch</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>siesta</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Siesta reads your heart rate to notice when you fall asleep, so your nap timer starts when you actually drift off.</string>
 	<key>NSHealthUpdateUsageDescription</key>

@@ -6,10 +6,11 @@ import HammockMark from "./HammockMark.astro";
     The face quietly cycles through the three states the product actually
     shows: waiting → sleeping → welcome back. ~12s loop, paused under
     prefers-reduced-motion. */}
-<div class="watch" role="img" aria-label="The Siesta app on a watch cycling through waiting, sleeping, and waking states">
+<div class="watch" role="img" aria-label="The Siesta app on a watch with a start button and duration selector">
   <div class="crown" aria-hidden="true"></div>
   <div class="face">
     <HammockMark size={58} animated />
+    <div class="mock-start">Start siesta</div>
     <div class="readout">
       <p class="mins state-wait">20<span class="unit"> min</span></p>
       <p class="mins state-sleep">18:47</p>
@@ -18,6 +19,7 @@ import HammockMark from "./HammockMark.astro";
       <p class="status s-sleep">sleeping</p>
       <p class="status s-wake">20 min siesta</p>
     </div>
+    <div class="mock-presets" aria-hidden="true"><span>15</span><strong>20</strong><span>25</span></div>
   </div>
 </div>
 
@@ -54,17 +56,36 @@ import HammockMark from "./HammockMark.astro";
     gap: 0.85rem;
     border-radius: 27%;
     background:
-      radial-gradient(140% 100% at 50% 0%, var(--surface-elevated) 0%, var(--surface) 46%, var(--scrim) 100%);
+      radial-gradient(140% 100% at 50% 0%, var(--surface-elevated) 0%, var(--surface) 46%, var(--brand-hammock) 78%, var(--scrim) 100%);
     box-shadow:
       inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 9%, transparent),
-      inset 0 -18px 44px color-mix(in srgb, #000 55%, transparent),
-      0 40px 80px -24px color-mix(in srgb, #000 80%, transparent);
+      inset 0 -18px 44px color-mix(in srgb, var(--accent-soft) 24%, transparent),
+      0 40px 80px -24px color-mix(in srgb, var(--text-primary) 30%, transparent);
     animation: faceglow 12s ease-in-out infinite;
+  }
+  .mock-start {
+    padding: 0.48rem 1.15rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 0.76rem;
+    font-weight: 600;
   }
   .readout {
     display: grid;
     justify-items: center;
     gap: 0.45rem;
+  }
+  .mock-presets {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--text-tertiary);
+    font-size: 0.66rem;
+  }
+  .mock-presets strong {
+    color: var(--accent);
+    font-size: 0.82rem;
   }
   .mins {
     margin: 0;

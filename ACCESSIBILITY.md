@@ -49,9 +49,8 @@ Any palette change that breaks contrast fails CI before it can ship.
 
 - Minimum touch target: **44 × 44 pt** (iOS) / **48 × 48 dp** (Android),
   encoded in `accessibility.minTouchTarget` tokens
-- Watch controls are full-width buttons reachable with one thumb;
-  duration selection uses the Digital Crown (native wheel picker), which
-  needs no precision tapping
+- Watch start and duration controls have 44 pt targets; duration uses
+  adjacent previous/next buttons so it needs no precision tapping
 - Every interactive element has an `accessibilityLabel` /
   `contentDescription`; decorative elements (hammock glyph, posts) are
   hidden from assistive tech

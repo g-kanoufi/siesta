@@ -9,6 +9,7 @@ import type { EpochMs, NapSessionSnapshot, Unsubscribe } from "./types";
 export interface SleepDetectionService {
   /** Begin sampling. Rejects with a calm reason if unavailable/denied. */
   start(): Promise<void>;
+  stopDetection?(): Promise<void>;
   stop(): Promise<void>;
   /** Fires once the platform estimates the user fell asleep. */
   onSleepDetected(callback: (atMs: EpochMs) => void): Unsubscribe;

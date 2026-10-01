@@ -9,15 +9,13 @@ final class SessionViewModel: ObservableObject {
     @Published private(set) var view: NapViewState?
     @Published var selectedMinutes: Int = 20
     @Published var showProbe = false
-    @Published var wakeIntensity: WakeIntensity = .gentle
-    @Published var didOnboard = false
-    @Published var showSleepAccessPrompt = false
 
-    private static let intensityKey = "siesta.wakeIntensity"
-    private static let onboardKey = "siesta.didOnboard"
-    private static let sleepAccessKey = "siesta.didExplainSleepAccess"
+    private static let durationKey = "siesta.defaultDurationMinutes"
+    private static let appGroup = "group.app.siesta"
+    private let wakeIntensity: WakeIntensity = .gentle
 
     private var manager: NapSessionManager?
+    private var startRequestedFromComplication = false
     private var unsubscribe: (() -> Void)?
     private var lastLoggedState: NapState?
     private var sleepService: SleepDetectionService?
@@ -34,10 +32,11 @@ final class SessionViewModel: ObservableObject {
             ? ExtendedRuntimeSleepDetector()
             : HealthKitSleepDetector()
         sleepService = sleep
-        wakeIntensity = UserDefaults.standard
-            .string(forKey: Self.intensityKey)
-            .flatMap(WakeIntensity.init(rawValue:)) ?? .gentle
-        didOnboard = UserDefaults.standard.bool(forKey: Self.onboardKey)
+        let defaults = UserDefaults(suiteName: Self.appGroup)
+        let storedDuration = defaults?.integer(forKey: Self.durationKey) ?? 20
+        if napDurationPresets.contains(where: { $0.minutes == storedDuration }) {
+            selectedMinutes = storedDuration
+        }
         let m = await NapSessionManager.resume(
             clock: SystemClock(),
             sleep: sleep,
@@ -53,6 +52,10 @@ final class SessionViewModel: ObservableObject {
             Task { @MainActor in self?.refresh() }
         }
         refresh()
+        if startRequestedFromComplication {
+            startRequestedFromComplication = false
+            beginFromComplication()
+        }
     }
 
     private func refresh() {
@@ -88,48 +91,39 @@ final class SessionViewModel: ObservableObject {
             .debugSimulateSleep(atMs: EpochMs(Date().timeIntervalSince1970 * 1000))
     }
 
-    /// Gentle → Normal → Strong. Persisted; takes effect immediately by
-    /// rebuilding the manager — only callable while no nap is in flight.
-    func cycleWakeIntensity() {
-        let all = WakeIntensity.allCases
-        let i = (all.firstIndex(of: wakeIntensity) ?? 0) + 1
-        let next = all[i % all.count]
-        wakeIntensity = next
-        UserDefaults.standard.set(next.rawValue, forKey: Self.intensityKey)
-        ProbeLog.shared.log("wake_intensity", ["value": next.rawValue])
-        Task { await rebuild() }
-    }
-
-    private func rebuild() async {
-        unsubscribe?()
-        unsubscribe = nil
-        manager = nil
-        await start()
-    }
-
     func selectDuration(_ minutes: Int) {
         selectedMinutes = minutes
+        UserDefaults(suiteName: Self.appGroup)?.set(minutes, forKey: Self.durationKey)
         ProbeLog.shared.log("select", ["minutes": minutes])
         try? manager?.selectDuration(minutes)
     }
 
-    func completeOnboarding() {
-        didOnboard = true
-        UserDefaults.standard.set(true, forKey: Self.onboardKey)
+    func reloadDefaultDuration() {
+        let storedDuration = UserDefaults(suiteName: Self.appGroup)?.integer(forKey: Self.durationKey) ?? 20
+        guard napDurationPresets.contains(where: { $0.minutes == storedDuration }) else { return }
+        if let manager {
+            let state = manager.view().state
+            guard state == .idle || state == .selectingDuration else { return }
+            try? manager.selectDuration(storedDuration)
+        }
+        selectedMinutes = storedDuration
     }
 
+    // First arm: explain why before the HealthKit sheet appears (§47).
     func begin() {
-        // First arm: explain why before the HealthKit sheet appears (§47).
-        if !UserDefaults.standard.bool(forKey: Self.sleepAccessKey) {
-            showSleepAccessPrompt = true
-            return
-        }
         arm()
     }
 
-    func confirmSleepAccess() {
-        UserDefaults.standard.set(true, forKey: Self.sleepAccessKey)
-        showSleepAccessPrompt = false
+    func beginFromComplication() {
+        guard let manager else {
+            startRequestedFromComplication = true
+            return
+        }
+        let state = manager.view().state
+        guard state == .idle || state == .selectingDuration else {
+            refresh()
+            return
+        }
         arm()
     }
 
