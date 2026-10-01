@@ -96,6 +96,23 @@ describe("sleep detection → wake", () => {
     expect(deps.store.lastSaved).toEqual(s);
   });
 
+  it("stops sampling at onset but keeps the background runtime through wake", async () => {
+    const { deps, m } = await toWaiting();
+    deps.sleep.simulateSleep(T0 + 5 * MIN);
+
+    expect(deps.sleep.stopDetectionCalls).toBe(1);
+    expect(deps.sleep.stopCalls).toBe(0);
+
+    deps.clock.set(T0 + 25 * MIN);
+    m.tick();
+    expect(m.state).toBe("waking");
+    expect(deps.sleep.stopCalls).toBe(0);
+
+    m.acknowledgeWake();
+    await m.dismiss();
+    expect(deps.sleep.stopCalls).toBe(1);
+  });
+
   it("stays asleep until the deadline, then wakes gently", async () => {
     const { deps, m } = await toWaiting();
     deps.sleep.simulateSleep(T0 + 5 * MIN);

@@ -248,7 +248,11 @@ export class NapSessionManager {
     // Detection done — stop sensors and replace the fail-safe with the
     // definitive wake alarm. Fire-and-forget: platform services queue
     // internally; keeping this synchronous keeps detection latency zero.
-    void this.deps.sleep.stop();
+    if (this.deps.sleep.stopDetection) {
+      void this.deps.sleep.stopDetection();
+    } else {
+      void this.deps.sleep.stop();
+    }
     void this.deps.scheduler.cancelAll();
     void this.deps.scheduler.schedule(
       this.snap.expectedWakeAtMs,

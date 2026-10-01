@@ -2,7 +2,7 @@
 import "@fontsource-variable/fraunces";
 import "@fontsource/instrument-sans";
 import "../styles/global.css";
-import { ambient, dark, sunset } from "@siesta/design-tokens";
+import { ambient, brand, dark, logoSunset, sunset } from "@siesta/design-tokens";
 import HammockMark from "../components/HammockMark.astro";
 import WatchMock from "../components/WatchMock.astro";
 
@@ -16,6 +16,11 @@ const cssVars = {
   "--accent": dark.accent,
   "--on-accent": dark.onAccent,
   "--accent-soft": dark.accentSoft,
+  "--brand-hammock": brand.hammockNavy,
+  "--brand-hammock-shade": brand.hammockShade,
+  "--logo-dawn": logoSunset.dawn,
+  "--logo-ember": logoSunset.ember,
+  "--logo-dusk": logoSunset.dusk,
   "--scrim": dark.scrim,
   "--font-display": '"Fraunces Variable", Georgia, serif',
   "--font-body": '"Instrument Sans", system-ui, sans-serif',
@@ -32,22 +37,17 @@ const steps = [
   {
     n: "01",
     title: "Choose a duration",
-    body: "Five minutes to two hours. Twenty is the classic siesta.",
+    body: "Set a default in the iPhone companion. Twenty minutes is the classic siesta.",
   },
   {
     n: "02",
-    title: "Put the watch down",
-    body: "No countdown yet. Siesta waits quietly while you settle.",
+    title: "Settle in",
+    body: "Daydream, rest, or drift off. Your watch estimates when sleep may begin from heart-rate trends.",
   },
   {
     n: "03",
-    title: "Drift",
-    body: "Your watch reads your heart rate settle into sleep. The timer starts then — not before.",
-  },
-  {
-    n: "04",
-    title: "Wake",
-    body: "Gentle haptics on your wrist, exactly when you asked. Not a second of nap wasted on setup.",
+    title: "Wake gently",
+    body: "Soft haptics bring you back when your nap is done.",
   },
 ];
 ---
@@ -59,7 +59,7 @@ const steps = [
     <title>Siesta — a nap timer that waits for sleep</title>
     <meta
       name="description"
-      content="Pick a duration, put your watch down, drift off. Siesta notices when you fall asleep and wakes you gently when it's over. €2.99, once. No subscription, no ads."
+      content="A gentle nap timer for daydreams and quiet breaks. Siesta estimates when sleep may begin from heart-rate changes; very still wakefulness can look similar."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content="Siesta — a nap timer that waits for sleep" />
@@ -86,13 +86,13 @@ const steps = [
         "@type": "SoftwareApplication",
         "name": "Siesta",
         "applicationCategory": "HealthApplication",
-        "operatingSystem": "watchOS, Wear OS",
+        "operatingSystem": "watchOS",
         "offers": {
           "@type": "Offer",
           "price": "2.99",
           "priceCurrency": "EUR"
         },
-        "description": "A tiny nap timer that waits for you to fall asleep. Choose a duration, drift off, wake gently on time."
+        "description": "A gentle nap timer for daydreams and quiet breaks. Siesta estimates when sleep may begin from heart-rate changes; very still wakefulness can look similar."
       }
     </script>
   </head>
@@ -109,35 +109,30 @@ const steps = [
       <section class="hero">
         <div class="hero-copy">
           <p class="eyebrow rise" style="animation-delay:.05s">A nap timer for your wrist</p>
-          <h1 class="rise" style="animation-delay:.12s">
-            Sleep first.<br />Count down second.
-          </h1>
+          <h1 class="rise" style="animation-delay:.12s">Sleep first.<br />Count down second.</h1>
           <p class="lede rise" style="animation-delay:.2s">
-            Pick a duration, put the watch down, drift off. Siesta is built to
-            notice the moment you actually fall asleep — the timer starts
-            then, not before.
+            Choose a duration. Daydream, rest, or drift off. Siesta estimates
+            when sleep may begin from your heart-rate trend, then starts the countdown.
           </p>
           <p class="failsafe-line rise" style="animation-delay:.24s">
-            Can't tell you're asleep? You still wake on time — worst case,
-            it's the calmest ordinary nap timer on your wrist.
+            A fail-safe wake is set the moment you start — even if sleep detection
+            never triggers.
           </p>
           <div class="cta rise" style="animation-delay:.28s">
-            <a class="pill" href="#price">€2.99 · one purchase</a>
-            <span class="store-pill">Coming to Apple&nbsp;Watch</span>
-            <span class="store-pill">Coming to Wear&nbsp;OS</span>
+            <a class="pill" href="#price">€2.99 · one-time purchase</a>
+            <span class="store-pill">Apple Watch + iPhone</span>
           </div>
         </div>
         <div class="hero-watch rise" style="animation-delay:.18s">
-          <div class="sun" aria-hidden="true"></div>
           <WatchMock />
         </div>
       </section>
 
       <section class="steps reveal" aria-labelledby="how">
-        <h2 id="how" class="section-label">How it works</h2>
+        <h2 id="how" class="section-label">Choose. Sleep. Wake.</h2>
         <ol>
           {
-            steps.map((s) => (
+            steps.slice(0, 3).map((s) => (
               <li>
                 <span class="step-n">{s.n}</span>
                 <div>
@@ -151,88 +146,33 @@ const steps = [
       </section>
 
       <section class="honest reveal">
-        <h2 class="display-small">Made to notice you drift off. Made to wake you anyway.</h2>
+        <h2 class="display-small">Your watch does the work.</h2>
         <p>
-          Most nap timers guess the moment you lie down and start counting.
-          Siesta doesn't. Your watch streams your heart rate, and the app
-          waits for the settled pattern of real sleep onset before the clock
-          begins.
-        </p>
-        <p>
-          <strong class="promise">And it works either way.</strong> A fail-safe
-          wake is locked in the moment you start a siesta. If detection never
-          fires — tonight you're still, warm and awake — the countdown simply
-          runs from the start and wakes you like a normal timer. No missed
-          alarm, no wasted nap.
+          Siesta estimates sleep onset from heart-rate trends on your watch. It
+          cannot detect daydreaming or sleep stages; very still, relaxed wakefulness
+          may resemble sleep and start the countdown early.
         </p>
         <p>
-          Your health data never leaves your wrist. There are no servers, no
-          account, nothing to sync — the whole app lives on the watch.
+          Heart-rate samples are processed on the watch and discarded after each
+          session. <strong class="promise">No account. No ads. No analytics. No backend.</strong>
+          Sleep detection is an estimate, not a medical measurement.
         </p>
-        <p class="fine">
-          Siesta is a better nap, not a medical device. Detection is a
-          heuristic — good enough for a nap, honest about everything else.
-        </p>
-      </section>
-
-      <section class="faq reveal" aria-labelledby="faq">
-        <h2 id="faq" class="section-label">Fair questions</h2>
-        <details>
-          <summary>How does it know I fell asleep?</summary>
-          <p>
-            While Siesta waits, your watch streams heart rate and motion. When
-            your pulse settles below its resting line and stays settled — and
-            your wrist goes still — the timer starts, credited back to the
-            moment the settling began. It's a good heuristic, not a sleep lab.
-          </p>
-        </details>
-        <details>
-          <summary>What if it can't tell?</summary>
-          <p>
-            A fail-safe wake is set the moment you arm a nap. If detection never
-            fires, you're still woken on time — the worst case is an ordinary,
-            honest nap timer. You can also start a plain timer with one tap.
-          </p>
-        </details>
-        <details>
-          <summary>Does it need my phone nearby?</summary>
-          <p>
-            No. Detection, the countdown, and the wake all run on the watch.
-            Nothing syncs; there's no account.
-          </p>
-        </details>
-        <details>
-          <summary>What about battery?</summary>
-          <p>
-            The sensor stream is the whole trick, so the goal is a 90-minute
-            nap under ~5% — measured on real hardware before we promise it,
-            not simulated.
-          </p>
-        </details>
-        <details>
-          <summary>Which watches?</summary>
-          <p>
-            Apple Watch on watchOS 11+, and Wear OS watches with a heart-rate
-            sensor. The iPhone and Android companions stay minimal — the watch
-            is the product.
-          </p>
-        </details>
       </section>
 
       <section class="price reveal" id="price">
         <h2 class="price-figure"><span class="cur">€</span>2.99</h2>
         <p class="price-word">once</p>
-        <p>
-          One purchase on the watch you already own. No subscription, no ads,
-          no metrics, no upsell — a nap timer shouldn't need a business model
-          beyond being bought.
-        </p>
+        <p>A small, one-time purchase. No subscription and no in-app upsell.</p>
       </section>
     </main>
 
     <footer class="footer">
       <HammockMark size={26} />
       <p>siesta.app</p>
+      <nav class="legal-links" aria-label="Legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/cgv">Terms of sale (CGV)</a>
+      </nav>
       <p class="fine">Designed to be forgotten the moment you lie down.</p>
     </footer>
 
@@ -337,28 +277,8 @@ const steps = [
     padding-left: 1rem;
     border-left: 2px solid var(--accent);
   }
-  /* The last of the sun, caught behind the watch face — a soft ember disc
-     that gives the hero its horizon. */
   .hero-watch {
     position: relative;
-  }
-  .sun {
-    position: absolute;
-    left: 50%;
-    top: 58%;
-    width: 130%;
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle,
-      color-mix(in srgb, var(--sky-ember) 30%, transparent) 0%,
-      color-mix(in srgb, var(--sky-coral) 14%, transparent) 38%,
-      transparent 66%);
-    animation: sunbreathe 9s ease-in-out infinite alternate;
-  }
-  @keyframes sunbreathe {
-    from { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
-    to   { opacity: 1;   transform: translate(-50%, -52%) scale(1.04); }
   }
   .cta {
     display: flex;
@@ -574,6 +494,15 @@ const steps = [
   }
   .footer .fine {
     color: color-mix(in srgb, var(--text-tertiary) 70%, transparent);
+  }
+  .legal-links {
+    display: flex;
+    gap: 1.4rem;
+    font-size: 0.82rem;
+  }
+  .legal-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
   }
 
   @media (max-width: 52rem) {

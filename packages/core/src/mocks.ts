@@ -13,6 +13,7 @@ export { ManualClock } from "./clock";
 /** Dev/test detector. `simulateSleep` is the "Simulate sleep" dev control. */
 export class MockSleepDetectionService implements SleepDetectionService {
   startCalls = 0;
+  stopDetectionCalls = 0;
   stopCalls = 0;
   running = false;
   private failStartError: Error | null = null;
@@ -22,6 +23,10 @@ export class MockSleepDetectionService implements SleepDetectionService {
     this.startCalls += 1;
     if (this.failStartError) throw this.failStartError;
     this.running = true;
+  }
+
+  async stopDetection(): Promise<void> {
+    this.stopDetectionCalls += 1;
   }
 
   async stop(): Promise<void> {

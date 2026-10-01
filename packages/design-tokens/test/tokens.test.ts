@@ -1,5 +1,5 @@
 import { accessibility } from "../src/accessibility";
-import { colors, type ColorScheme } from "../src/colors";
+import { brand, colors, logoSunset, sunsetGradient, type ColorScheme } from "../src/colors";
 import { ambient, motion } from "../src/motion";
 import type { MotionPrimitive } from "../src/motion";
 import { spacing } from "../src/spacing";
@@ -49,6 +49,25 @@ describe("color tokens", () => {
     expect(contrast(s.onAccent, s.accent)).toBeGreaterThanOrEqual(
       accessibility.contrast.normalTextMin,
     );
+  });
+
+  it.each(schemes)("%s: text stays readable across the sunset gradient", (name, s) => {
+    for (const stop of sunsetGradient[name]) {
+      expect(contrast(s.textPrimary, stop)).toBeGreaterThanOrEqual(
+        accessibility.contrast.normalTextMin,
+      );
+      expect(contrast(s.textSecondary, stop)).toBeGreaterThanOrEqual(
+        accessibility.contrast.normalTextMin,
+      );
+    }
+  });
+
+  it("the navy hammock mark stands out on every logo gradient band", () => {
+    for (const stop of Object.values(logoSunset)) {
+      expect(contrast(brand.hammockNavy, stop)).toBeGreaterThanOrEqual(
+        accessibility.contrast.largeTextMin,
+      );
+    }
   });
 
   it.each(schemes)("%s: status colors are distinguishable on background", (_, s) => {

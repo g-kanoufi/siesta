@@ -133,6 +133,35 @@ final class ScenarioVectorTests: XCTestCase {
     }
 }
 
+final class SessionLifecycleTests: XCTestCase {
+    func testSleepSamplingStopsAtOnsetButRuntimeEndsAfterWakeAcknowledgement() async throws {
+        let clock = ManualClock(0)
+        let sleep = MockSleepDetectionService()
+        let manager = NapSessionManager(
+            clock: clock,
+            sleep: sleep,
+            scheduler: RecordingAlarmScheduler(),
+            haptics: RecordingHaptics(),
+            store: InMemorySessionStore()
+        )
+        try manager.selectDuration(20)
+        try await manager.start()
+
+        sleep.simulateSleep(atMs: clock.nowMs())
+        XCTAssertEqual(sleep.stopDetectionCalls, 1)
+        XCTAssertEqual(sleep.stopCalls, 0)
+
+        clock.set(20 * minuteMs)
+        manager.tick()
+        XCTAssertEqual(manager.state, .waking)
+        XCTAssertEqual(sleep.stopCalls, 0)
+
+        manager.acknowledgeWake()
+        manager.dismiss()
+        XCTAssertEqual(sleep.stopCalls, 1)
+    }
+}
+
 final class ConstantsVectorTests: XCTestCase {
     struct ConstantsFile: Decodable {
         struct Values: Decodable {

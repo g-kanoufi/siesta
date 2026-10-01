@@ -9,8 +9,9 @@ Single source of truth: `@siesta/design-tokens`. Components consume tokens;
 nobody hardcodes hexes or durations.
 
 - **Color** — semantic roles (`background`, `surface`, `textPrimary`,
-  `accent`, …) in light + dark. Warm paper / warm charcoal; dark mode is
-  designed, not blacked. Tests enforce WCAG AA.
+  `accent`, …) in light + dark. Warm sand into cool stone in light, deep
+  charcoal with amber dusk in dark. Tests enforce WCAG AA for surfaces and
+  gradient stops.
 - **Type** — system font only, roles: `title`, `heroNumber`, `heroUnit`,
   `body`, `supporting`, `action`, `caption`. The duration number dominates.
 - **Spacing** — 4-pt grid (`xxs`–`screen`); pill radii for controls.
@@ -19,22 +20,26 @@ nobody hardcodes hexes or durations.
   plus ambient (`breathe`, `sway`, `rise`) for the hammock. Every primitive
   ships a required `reducedMotion` alternative.
 
+## The mark
+
+- The wordmark lockup uses the OG hammock silhouette in tone-on-tone dark
+  navy, centered on the subtle dusk-to-dawn gradient.
+- No sun, water, ropes, teal, or light-blue hammock details.
+- The standalone Watch/mobile icon keeps the same crisp, navy-only silhouette;
+  depth comes from dark shading rather than blur or fine folds.
+
 ## The screen (watch)
 
 ```
-        hammock          ← barely moving; it breathes
-
-       20 min            ← heroNumber, instantly readable
-    Classic power nap    ← supporting, muted
-
-   ─────────────────
-
-    Start siesta         ← one primary action, ≥44pt/48dp target
+    hammock logo tile
+      Start siesta        ← one primary action, ≥44pt/48dp target
+       20 min             ← heroNumber, instantly readable
+  starts when you drift off
+       15  20  25         ← compact preset window
 ```
 
-Duration picker: adjacent tap or Digital Crown / rotary input — 10, 15,
-**20**, 25, 30, 45, 60, 90. Selection scales up gently (`springStandard`);
-neighbors ease apart. The hammock subtly acknowledges the choice.
+The three-option duration window follows the remembered preset across the list:
+10, 15, **20**, 25, 30, 45, 60, 90. Twenty minutes is the fallback.
 
 ## The hammock
 

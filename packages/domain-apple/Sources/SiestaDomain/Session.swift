@@ -231,7 +231,7 @@ public final class NapSessionManager {
             durationMinutes: s.selectedDurationMinutes
         )
         snapshot = s
-        sleep.stop()
+        sleep.stopDetection()
         scheduler.cancelAll()
         scheduler.schedule(atMs: s.expectedWakeAtMs!, kind: .napWake, sessionId: s.id)
         persist()
